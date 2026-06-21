@@ -12,12 +12,15 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY launch config description worlds
+  DIRECTORY launch config description worlds models
   DESTINATION share/${PROJECT_NAME}
 )
 
 install(
-  PROGRAMS scripts/odom_tf_relay.py
+  PROGRAMS
+    scripts/odom_tf_relay.py
+    scripts/lane_processor.py
+    scripts/lane_follower_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
