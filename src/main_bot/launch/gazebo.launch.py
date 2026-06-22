@@ -113,7 +113,7 @@ def generate_launch_description():
 
     lane_control_node = Node(
         package='main_bot',
-        executable='lane_control_node.py',
+        executable='lane_control_node',
         name='lane_control_node',
         parameters=[{
             'use_sim_time': True,
