@@ -65,7 +65,7 @@
       <update_rate>10</update_rate>
       <topic>/camera</topic>
       <camera name="camera">
-        <horizontal_fov>1.089</horizontal_fov>   <!-- ~62° FOV -->
+        <horizontal_fov>2.094</horizontal_fov>   <!-- 120° FOV -->
         <image>
           <width>640</width>
           <height>480</height>

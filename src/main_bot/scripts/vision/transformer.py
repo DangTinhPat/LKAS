@@ -15,7 +15,7 @@ Quy ước hệ trục ROS (REP-103):
 
 Thông số camera (từ robot_core.xacro & camera.xacro):
   Độ phân giải       : 640 × 480 px
-  Horizontal FOV     : 1.089 rad
+  Horizontal FOV     : 2.094 rad
   Chiều cao lens     : 0.134 m so với mặt đất
   Offset dọc theo X  : 0.1485 m (camera đặt ở mặt trước thân xe)
   Góc nghiêng (Pitch): 0.0 rad  (nhìn thẳng, rpy="0 0 0")
@@ -51,7 +51,7 @@ class GeometryTransformer:
         self,
         img_w:       int   = 640,
         img_h:       int   = 480,
-        h_fov:       float = 1.089,    # rad, horizontal FOV
+        h_fov:       float = 2.094,    # rad, horizontal FOV (120°)
         cam_height:  float = 0.134,    # m, chiều cao camera so với mặt đất
         cam_pitch:   float = 0.0,      # rad, góc cúi xuống (dương = cúi về phía đường)
         cam_x_offset: float = 0.1485,  # m, khoảng cách từ tâm xe đến camera theo X

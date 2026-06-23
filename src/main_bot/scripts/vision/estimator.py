@@ -73,25 +73,35 @@ class LaneEstimator:
         self, pts: List[Tuple[float, float]]
     ) -> Optional[np.ndarray]:
         """
-        Khớp đa thức bậc 2: Y = A·X² + B·X + C lên tập hợp điểm mét.
+        Khớp đa thức bậc 2 với sigma clipping để loại outlier.
 
-        Sử dụng phương pháp bình phương tối thiểu (Least Squares) qua np.polyfit.
+        Thuật toán:
+          1. Fit lần đầu trên toàn bộ điểm.
+          2. Tính residual; loại bỏ điểm nằm ngoài 2σ.
+          3. Fit lại trên tập điểm đã lọc (nếu còn đủ điểm).
 
-        np.polyfit(Xv, Yv, 2) trả về [A, B, C] theo thứ tự bậc giảm dần:
-          Yv ≈ A · Xv² + B · Xv + C
-
-        Returns
-        -------
-        np.ndarray([A, B, C]) hoặc None nếu fit thất bại.
+        Returns np.ndarray([A, B, C]) hoặc None.
         """
         arr = np.array(pts, dtype=np.float64)
-        Xv  = arr[:, 0]   # tọa độ tiến (forward, m)
-        Yv  = arr[:, 1]   # tọa độ ngang (lateral, m)
+        Xv  = arr[:, 0]
+        Yv  = arr[:, 1]
 
         try:
-            coeffs = np.polyfit(Xv, Yv, deg=2)  # → [A, B, C]
+            coeffs = np.polyfit(Xv, Yv, deg=2)
         except (np.linalg.LinAlgError, ValueError):
             return None
+
+        # Sigma clipping — loại outlier có residual > 2σ
+        Y_pred   = np.polyval(coeffs, Xv)
+        residual = np.abs(Yv - Y_pred)
+        sigma    = residual.std()
+        if sigma > 1e-6:
+            inliers = residual < 2.0 * sigma
+            if inliers.sum() >= self._min_pts:
+                try:
+                    coeffs = np.polyfit(Xv[inliers], Yv[inliers], deg=2)
+                except (np.linalg.LinAlgError, ValueError):
+                    pass   # giữ nguyên fit lần đầu nếu re-fit thất bại
 
         return coeffs
 
