@@ -32,7 +32,7 @@
       <link name="link">
         <collision name="collision">
           <geometry>
-            <plane><normal>0 0 1</normal><size>100 100</size></plane>
+            <plane><normal>0 0 1</normal><size>200 200</size></plane>
           </geometry>
           <surface>
             <friction>
@@ -42,7 +42,7 @@
         </collision>
         <visual name="visual">
           <geometry>
-            <plane><normal>0 0 1</normal><size>100 100</size></plane>
+            <plane><normal>0 0 1</normal><size>200 200</size></plane>
           </geometry>
           <material>
             <ambient>0.10 0.10 0.10 1</ambient>
@@ -53,10 +53,10 @@
     </model>
     <model name="road_top">
       <static>true</static>
-      <pose>0.00000 2.53400 0.00250 0 0 0.00000</pose>
+      <pose>0.00000 2.53400 0.00250 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>12.00000 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -67,10 +67,10 @@
     </model>
     <model name="road_bot">
       <static>true</static>
-      <pose>0.00000 -2.53400 0.00250 0 0 0.00000</pose>
+      <pose>0.00000 -2.53400 0.00250 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>12.00000 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -81,10 +81,10 @@
     </model>
     <model name="sl_top_0">
       <static>true</static>
-      <pose>0.00000 2.00000 0.00700 0 0 0.00000</pose>
+      <pose>0.00000 2.00000 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>12.00000 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -95,10 +95,38 @@
     </model>
     <model name="sl_bot_0">
       <static>true</static>
-      <pose>0.00000 -2.00000 0.00700 0 0 0.00000</pose>
+      <pose>0.00000 -2.00000 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>12.00000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="sl_top_2">
+      <static>true</static>
+      <pose>0.00000 3.06800 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>12.00000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="sl_bot_2">
+      <static>true</static>
+      <pose>0.00000 -3.06800 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>12.00000 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -109,161 +137,7 @@
     </model>
     <model name="dl_top_1_0">
       <static>true</static>
-      <pose>-2.75000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_1">
-      <static>true</static>
-      <pose>-2.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_2">
-      <static>true</static>
-      <pose>-1.75000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_3">
-      <static>true</static>
-      <pose>-1.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_4">
-      <static>true</static>
-      <pose>-0.75000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_5">
-      <static>true</static>
-      <pose>-0.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_6">
-      <static>true</static>
-      <pose>0.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_7">
-      <static>true</static>
-      <pose>0.75000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_8">
-      <static>true</static>
-      <pose>1.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_9">
-      <static>true</static>
-      <pose>1.75000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_10">
-      <static>true</static>
-      <pose>2.25000 2.53400 0.00700 0 0 0.00000</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="dl_top_1_11">
-      <static>true</static>
-      <pose>2.75000 2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-5.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -277,7 +151,21 @@
     </model>
     <model name="dl_bot_1_0">
       <static>true</static>
-      <pose>-2.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-5.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_1">
+      <static>true</static>
+      <pose>-5.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -291,7 +179,21 @@
     </model>
     <model name="dl_bot_1_1">
       <static>true</static>
-      <pose>-2.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-5.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_2">
+      <static>true</static>
+      <pose>-4.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -305,7 +207,21 @@
     </model>
     <model name="dl_bot_1_2">
       <static>true</static>
-      <pose>-1.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-4.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_3">
+      <static>true</static>
+      <pose>-4.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -319,7 +235,21 @@
     </model>
     <model name="dl_bot_1_3">
       <static>true</static>
-      <pose>-1.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-4.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_4">
+      <static>true</static>
+      <pose>-3.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -333,7 +263,21 @@
     </model>
     <model name="dl_bot_1_4">
       <static>true</static>
-      <pose>-0.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-3.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_5">
+      <static>true</static>
+      <pose>-3.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -347,7 +291,21 @@
     </model>
     <model name="dl_bot_1_5">
       <static>true</static>
-      <pose>-0.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-3.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_6">
+      <static>true</static>
+      <pose>-2.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -361,7 +319,21 @@
     </model>
     <model name="dl_bot_1_6">
       <static>true</static>
-      <pose>0.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-2.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_7">
+      <static>true</static>
+      <pose>-2.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -375,7 +347,21 @@
     </model>
     <model name="dl_bot_1_7">
       <static>true</static>
-      <pose>0.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-2.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_8">
+      <static>true</static>
+      <pose>-1.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -389,7 +375,21 @@
     </model>
     <model name="dl_bot_1_8">
       <static>true</static>
-      <pose>1.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-1.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_9">
+      <static>true</static>
+      <pose>-1.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -403,7 +403,21 @@
     </model>
     <model name="dl_bot_1_9">
       <static>true</static>
-      <pose>1.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-1.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_10">
+      <static>true</static>
+      <pose>-0.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -417,7 +431,21 @@
     </model>
     <model name="dl_bot_1_10">
       <static>true</static>
-      <pose>2.25000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-0.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_11">
+      <static>true</static>
+      <pose>-0.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -431,7 +459,7 @@
     </model>
     <model name="dl_bot_1_11">
       <static>true</static>
-      <pose>2.75000 -2.53400 0.00700 0 0 0.00000</pose>
+      <pose>-0.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
           <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
@@ -443,12 +471,12 @@
         </visual>
       </link>
     </model>
-    <model name="sl_top_2">
+    <model name="dl_top_1_12">
       <static>true</static>
-      <pose>0.00000 3.06800 0.00700 0 0 0.00000</pose>
+      <pose>0.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -457,12 +485,320 @@
         </visual>
       </link>
     </model>
-    <model name="sl_bot_2">
+    <model name="dl_bot_1_12">
       <static>true</static>
-      <pose>0.00000 -3.06800 0.00700 0 0 0.00000</pose>
+      <pose>0.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>6.00000 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_13">
+      <static>true</static>
+      <pose>0.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_13">
+      <static>true</static>
+      <pose>0.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_14">
+      <static>true</static>
+      <pose>1.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_14">
+      <static>true</static>
+      <pose>1.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_15">
+      <static>true</static>
+      <pose>1.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_15">
+      <static>true</static>
+      <pose>1.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_16">
+      <static>true</static>
+      <pose>2.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_16">
+      <static>true</static>
+      <pose>2.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_17">
+      <static>true</static>
+      <pose>2.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_17">
+      <static>true</static>
+      <pose>2.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_18">
+      <static>true</static>
+      <pose>3.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_18">
+      <static>true</static>
+      <pose>3.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_19">
+      <static>true</static>
+      <pose>3.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_19">
+      <static>true</static>
+      <pose>3.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_20">
+      <static>true</static>
+      <pose>4.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_20">
+      <static>true</static>
+      <pose>4.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_21">
+      <static>true</static>
+      <pose>4.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_21">
+      <static>true</static>
+      <pose>4.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_22">
+      <static>true</static>
+      <pose>5.25000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_22">
+      <static>true</static>
+      <pose>5.25000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_top_1_23">
+      <static>true</static>
+      <pose>5.75000 2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="dl_bot_1_23">
+      <static>true</static>
+      <pose>5.75000 -2.53400 0.00700 0.0 0.0 0.00000</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.30000 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -473,10 +809,10 @@
     </model>
     <model name="road_r_0">
       <static>true</static>
-      <pose>3.16524 2.52109 0.00250 0.0 0.0 -0.06545</pose>
+      <pose>6.16573 2.52857 0.00250 0.0 0.0 -0.06545</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -487,10 +823,10 @@
     </model>
     <model name="cl_r_0_0">
       <static>true</static>
-      <pose>3.13081 1.99572 0.00700 0 0 -0.06545</pose>
+      <pose>6.13081 1.99572 0.00700 0.0 0.0 -0.06545</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -501,10 +837,10 @@
     </model>
     <model name="cl_r_1_0">
       <static>true</static>
-      <pose>3.16573 2.52857 0.00700 0 0 -0.06545</pose>
+      <pose>6.16573 2.52857 0.00700 0.0 0.0 -0.06545</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -515,1298 +851,10 @@
     </model>
     <model name="cl_r_2_0">
       <static>true</static>
-      <pose>3.20066 3.06143 0.00700 0 0 -0.06545</pose>
+      <pose>6.20066 3.06143 0.00700 0.0 0.0 -0.06545</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_1">
-      <static>true</static>
-      <pose>3.49290 2.47795 0.00250 0.0 0.0 -0.19635</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_1">
-      <static>true</static>
-      <pose>3.39018 1.96157 0.00700 0 0 -0.19635</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_1">
-      <static>true</static>
-      <pose>3.49436 2.48531 0.00700 0 0 -0.19635</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_1">
-      <static>true</static>
-      <pose>3.59854 3.00905 0.00700 0 0 -0.19635</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_2">
-      <static>true</static>
-      <pose>3.81211 2.39242 0.00250 0.0 0.0 -0.32725</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_2">
-      <static>true</static>
-      <pose>3.64288 1.89386 0.00700 0 0 -0.32725</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_2">
-      <static>true</static>
-      <pose>3.81453 2.39952 0.00700 0 0 -0.32725</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_2">
-      <static>true</static>
-      <pose>3.98617 2.90518 0.00700 0 0 -0.32725</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_3">
-      <static>true</static>
-      <pose>4.11744 2.26595 0.00250 0.0 0.0 -0.45815</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_3">
-      <static>true</static>
-      <pose>3.88458 1.79375 0.00700 0 0 -0.45815</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_3">
-      <static>true</static>
-      <pose>4.12076 2.27268 0.00700 0 0 -0.45815</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_3">
-      <static>true</static>
-      <pose>4.35694 2.75161 0.00700 0 0 -0.45815</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_4">
-      <static>true</static>
-      <pose>4.40365 2.10071 0.00250 0.0 0.0 -0.58905</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_4">
-      <static>true</static>
-      <pose>4.11114 1.66294 0.00700 0 0 -0.58905</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_4">
-      <static>true</static>
-      <pose>4.40781 2.10694 0.00700 0 0 -0.58905</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_4">
-      <static>true</static>
-      <pose>4.70449 2.55095 0.00700 0 0 -0.58905</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_5">
-      <static>true</static>
-      <pose>4.66584 1.89952 0.00250 0.0 0.0 -0.71995</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_5">
-      <static>true</static>
-      <pose>4.31869 1.50368 0.00700 0 0 -0.71995</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_5">
-      <static>true</static>
-      <pose>4.67078 1.90516 0.00700 0 0 -0.71995</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_5">
-      <static>true</static>
-      <pose>5.02287 2.30664 0.00700 0 0 -0.71995</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_6">
-      <static>true</static>
-      <pose>4.89952 1.66584 0.00250 0.0 0.0 -0.85085</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_6">
-      <static>true</static>
-      <pose>4.50368 1.31869 0.00700 0 0 -0.85085</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_6">
-      <static>true</static>
-      <pose>4.90516 1.67078 0.00700 0 0 -0.85085</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_6">
-      <static>true</static>
-      <pose>5.30665 2.02287 0.00700 0 0 -0.85085</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_7">
-      <static>true</static>
-      <pose>5.10071 1.40365 0.00250 0.0 0.0 -0.98175</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_7">
-      <static>true</static>
-      <pose>4.66294 1.11114 0.00700 0 0 -0.98175</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_7">
-      <static>true</static>
-      <pose>5.10694 1.40781 0.00700 0 0 -0.98175</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_7">
-      <static>true</static>
-      <pose>5.55095 1.70449 0.00700 0 0 -0.98175</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_8">
-      <static>true</static>
-      <pose>5.26595 1.11744 0.00250 0.0 0.0 -1.11265</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_8">
-      <static>true</static>
-      <pose>4.79375 0.88458 0.00700 0 0 -1.11265</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_8">
-      <static>true</static>
-      <pose>5.27268 1.12076 0.00700 0 0 -1.11265</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_8">
-      <static>true</static>
-      <pose>5.75161 1.35694 0.00700 0 0 -1.11265</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_9">
-      <static>true</static>
-      <pose>5.39242 0.81212 0.00250 0.0 0.0 -1.24355</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_9">
-      <static>true</static>
-      <pose>4.89386 0.64288 0.00700 0 0 -1.24355</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_9">
-      <static>true</static>
-      <pose>5.39952 0.81453 0.00700 0 0 -1.24355</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_9">
-      <static>true</static>
-      <pose>5.90518 0.98618 0.00700 0 0 -1.24355</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_10">
-      <static>true</static>
-      <pose>5.47795 0.49290 0.00250 0.0 0.0 -1.37445</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_10">
-      <static>true</static>
-      <pose>4.96157 0.39018 0.00700 0 0 -1.37445</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_10">
-      <static>true</static>
-      <pose>5.48531 0.49436 0.00700 0 0 -1.37445</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_10">
-      <static>true</static>
-      <pose>6.00905 0.59854 0.00700 0 0 -1.37445</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_11">
-      <static>true</static>
-      <pose>5.52109 0.16524 0.00250 0.0 0.0 -1.50535</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_11">
-      <static>true</static>
-      <pose>4.99572 0.13081 0.00700 0 0 -1.50535</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_11">
-      <static>true</static>
-      <pose>5.52858 0.16573 0.00700 0 0 -1.50535</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_11">
-      <static>true</static>
-      <pose>6.06143 0.20066 0.00700 0 0 -1.50535</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_12">
-      <static>true</static>
-      <pose>5.52109 -0.16524 0.00250 0.0 0.0 -1.63625</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_12">
-      <static>true</static>
-      <pose>4.99572 -0.13081 0.00700 0 0 -1.63625</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_12">
-      <static>true</static>
-      <pose>5.52857 -0.16573 0.00700 0 0 -1.63625</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_12">
-      <static>true</static>
-      <pose>6.06143 -0.20066 0.00700 0 0 -1.63625</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_13">
-      <static>true</static>
-      <pose>5.47795 -0.49290 0.00250 0.0 0.0 -1.76715</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_13">
-      <static>true</static>
-      <pose>4.96157 -0.39018 0.00700 0 0 -1.76715</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_13">
-      <static>true</static>
-      <pose>5.48531 -0.49436 0.00700 0 0 -1.76715</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_13">
-      <static>true</static>
-      <pose>6.00905 -0.59854 0.00700 0 0 -1.76715</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_14">
-      <static>true</static>
-      <pose>5.39242 -0.81211 0.00250 0.0 0.0 -1.89805</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_14">
-      <static>true</static>
-      <pose>4.89386 -0.64288 0.00700 0 0 -1.89805</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_14">
-      <static>true</static>
-      <pose>5.39952 -0.81453 0.00700 0 0 -1.89805</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_14">
-      <static>true</static>
-      <pose>5.90518 -0.98617 0.00700 0 0 -1.89805</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_15">
-      <static>true</static>
-      <pose>5.26595 -1.11744 0.00250 0.0 0.0 -2.02895</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_15">
-      <static>true</static>
-      <pose>4.79375 -0.88458 0.00700 0 0 -2.02895</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_15">
-      <static>true</static>
-      <pose>5.27268 -1.12076 0.00700 0 0 -2.02895</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_15">
-      <static>true</static>
-      <pose>5.75161 -1.35694 0.00700 0 0 -2.02895</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_16">
-      <static>true</static>
-      <pose>5.10071 -1.40365 0.00250 0.0 0.0 -2.15984</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_16">
-      <static>true</static>
-      <pose>4.66294 -1.11114 0.00700 0 0 -2.15984</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_16">
-      <static>true</static>
-      <pose>5.10694 -1.40781 0.00700 0 0 -2.15984</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_16">
-      <static>true</static>
-      <pose>5.55095 -1.70449 0.00700 0 0 -2.15984</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_17">
-      <static>true</static>
-      <pose>4.89952 -1.66584 0.00250 0.0 0.0 -2.29074</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_17">
-      <static>true</static>
-      <pose>4.50368 -1.31869 0.00700 0 0 -2.29074</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_17">
-      <static>true</static>
-      <pose>4.90516 -1.67078 0.00700 0 0 -2.29074</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_17">
-      <static>true</static>
-      <pose>5.30664 -2.02287 0.00700 0 0 -2.29074</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_18">
-      <static>true</static>
-      <pose>4.66584 -1.89952 0.00250 0.0 0.0 -2.42164</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_18">
-      <static>true</static>
-      <pose>4.31869 -1.50368 0.00700 0 0 -2.42164</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_18">
-      <static>true</static>
-      <pose>4.67078 -1.90516 0.00700 0 0 -2.42164</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_18">
-      <static>true</static>
-      <pose>5.02287 -2.30665 0.00700 0 0 -2.42164</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_19">
-      <static>true</static>
-      <pose>4.40365 -2.10071 0.00250 0.0 0.0 -2.55254</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_19">
-      <static>true</static>
-      <pose>4.11114 -1.66294 0.00700 0 0 -2.55254</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_19">
-      <static>true</static>
-      <pose>4.40781 -2.10694 0.00700 0 0 -2.55254</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_19">
-      <static>true</static>
-      <pose>4.70449 -2.55095 0.00700 0 0 -2.55254</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_20">
-      <static>true</static>
-      <pose>4.11744 -2.26595 0.00250 0.0 0.0 -2.68344</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_20">
-      <static>true</static>
-      <pose>3.88458 -1.79375 0.00700 0 0 -2.68344</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_20">
-      <static>true</static>
-      <pose>4.12076 -2.27268 0.00700 0 0 -2.68344</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_20">
-      <static>true</static>
-      <pose>4.35694 -2.75161 0.00700 0 0 -2.68344</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_21">
-      <static>true</static>
-      <pose>3.81211 -2.39242 0.00250 0.0 0.0 -2.81434</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_21">
-      <static>true</static>
-      <pose>3.64288 -1.89386 0.00700 0 0 -2.81434</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_21">
-      <static>true</static>
-      <pose>3.81453 -2.39952 0.00700 0 0 -2.81434</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_21">
-      <static>true</static>
-      <pose>3.98618 -2.90518 0.00700 0 0 -2.81434</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_22">
-      <static>true</static>
-      <pose>3.49290 -2.47795 0.00250 0.0 0.0 -2.94524</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_22">
-      <static>true</static>
-      <pose>3.39018 -1.96157 0.00700 0 0 -2.94524</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_22">
-      <static>true</static>
-      <pose>3.49436 -2.48531 0.00700 0 0 -2.94524</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_22">
-      <static>true</static>
-      <pose>3.59854 -3.00905 0.00700 0 0 -2.94524</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="road_r_23">
-      <static>true</static>
-      <pose>3.16524 -2.52109 0.00250 0.0 0.0 -3.07614</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
-          <material>
-            <ambient>0.030 0.030 0.030 1</ambient>
-            <diffuse>0.050 0.050 0.050 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_0_23">
-      <static>true</static>
-      <pose>3.13081 -1.99572 0.00700 0 0 -3.07614</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_1_23">
-      <static>true</static>
-      <pose>3.16573 -2.52858 0.00700 0 0 -3.07614</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
-          <material>
-            <ambient>1.000 1.000 1.000 1</ambient>
-            <diffuse>1.000 1.000 1.000 1</diffuse>
-            <specular>0.05 0.05 0.05 1</specular>
-          </material>
-        </visual>
-      </link>
-    </model>
-    <model name="cl_r_2_23">
-      <static>true</static>
-      <pose>3.20066 -3.06143 0.00700 0 0 -3.07614</pose>
-      <link name="link">
-        <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1817,10 +865,10 @@
     </model>
     <model name="road_l_0">
       <static>true</static>
-      <pose>-3.16524 -2.52109 0.00250 0.0 0.0 3.07614</pose>
+      <pose>-6.16573 2.52857 0.00250 0.0 0.0 3.20704</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -1831,10 +879,10 @@
     </model>
     <model name="cl_l_0_0">
       <static>true</static>
-      <pose>-3.13081 -1.99572 0.00700 0 0 3.07614</pose>
+      <pose>-6.13081 1.99572 0.00700 0.0 0.0 3.20704</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1845,10 +893,10 @@
     </model>
     <model name="cl_l_1_0">
       <static>true</static>
-      <pose>-3.16573 -2.52857 0.00700 0 0 3.07614</pose>
+      <pose>-6.16573 2.52857 0.00700 0.0 0.0 3.20704</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1859,10 +907,66 @@
     </model>
     <model name="cl_l_2_0">
       <static>true</static>
-      <pose>-3.20066 -3.06143 0.00700 0 0 3.07614</pose>
+      <pose>-6.20066 3.06143 0.00700 0.0 0.0 3.20704</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_1">
+      <static>true</static>
+      <pose>6.49436 2.48531 0.00250 0.0 0.0 -0.19635</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_1">
+      <static>true</static>
+      <pose>6.39018 1.96157 0.00700 0.0 0.0 -0.19635</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_1">
+      <static>true</static>
+      <pose>6.49436 2.48531 0.00700 0.0 0.0 -0.19635</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_1">
+      <static>true</static>
+      <pose>6.59854 3.00905 0.00700 0.0 0.0 -0.19635</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1873,10 +977,10 @@
     </model>
     <model name="road_l_1">
       <static>true</static>
-      <pose>-3.49290 -2.47795 0.00250 0.0 0.0 2.94524</pose>
+      <pose>-6.49436 2.48531 0.00250 0.0 0.0 3.33794</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -1887,10 +991,10 @@
     </model>
     <model name="cl_l_0_1">
       <static>true</static>
-      <pose>-3.39018 -1.96157 0.00700 0 0 2.94524</pose>
+      <pose>-6.39018 1.96157 0.00700 0.0 0.0 3.33794</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1901,10 +1005,10 @@
     </model>
     <model name="cl_l_1_1">
       <static>true</static>
-      <pose>-3.49436 -2.48531 0.00700 0 0 2.94524</pose>
+      <pose>-6.49436 2.48531 0.00700 0.0 0.0 3.33794</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1915,10 +1019,66 @@
     </model>
     <model name="cl_l_2_1">
       <static>true</static>
-      <pose>-3.59854 -3.00905 0.00700 0 0 2.94524</pose>
+      <pose>-6.59854 3.00905 0.00700 0.0 0.0 3.33794</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_2">
+      <static>true</static>
+      <pose>6.81453 2.39952 0.00250 0.0 0.0 -0.32725</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_2">
+      <static>true</static>
+      <pose>6.64288 1.89386 0.00700 0.0 0.0 -0.32725</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_2">
+      <static>true</static>
+      <pose>6.81453 2.39952 0.00700 0.0 0.0 -0.32725</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_2">
+      <static>true</static>
+      <pose>6.98618 2.90518 0.00700 0.0 0.0 -0.32725</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1929,10 +1089,10 @@
     </model>
     <model name="road_l_2">
       <static>true</static>
-      <pose>-3.81211 -2.39242 0.00250 0.0 0.0 2.81434</pose>
+      <pose>-6.81453 2.39952 0.00250 0.0 0.0 3.46884</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -1943,10 +1103,10 @@
     </model>
     <model name="cl_l_0_2">
       <static>true</static>
-      <pose>-3.64288 -1.89386 0.00700 0 0 2.81434</pose>
+      <pose>-6.64288 1.89386 0.00700 0.0 0.0 3.46884</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1957,10 +1117,10 @@
     </model>
     <model name="cl_l_1_2">
       <static>true</static>
-      <pose>-3.81453 -2.39952 0.00700 0 0 2.81434</pose>
+      <pose>-6.81453 2.39952 0.00700 0.0 0.0 3.46884</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1971,10 +1131,66 @@
     </model>
     <model name="cl_l_2_2">
       <static>true</static>
-      <pose>-3.98617 -2.90518 0.00700 0 0 2.81434</pose>
+      <pose>-6.98618 2.90518 0.00700 0.0 0.0 3.46884</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_3">
+      <static>true</static>
+      <pose>7.12076 2.27268 0.00250 0.0 0.0 -0.45815</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_3">
+      <static>true</static>
+      <pose>6.88458 1.79375 0.00700 0.0 0.0 -0.45815</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_3">
+      <static>true</static>
+      <pose>7.12076 2.27268 0.00700 0.0 0.0 -0.45815</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_3">
+      <static>true</static>
+      <pose>7.35694 2.75161 0.00700 0.0 0.0 -0.45815</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -1985,10 +1201,10 @@
     </model>
     <model name="road_l_3">
       <static>true</static>
-      <pose>-4.11744 -2.26595 0.00250 0.0 0.0 2.68344</pose>
+      <pose>-7.12076 2.27268 0.00250 0.0 0.0 3.59974</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -1999,10 +1215,10 @@
     </model>
     <model name="cl_l_0_3">
       <static>true</static>
-      <pose>-3.88458 -1.79375 0.00700 0 0 2.68344</pose>
+      <pose>-6.88458 1.79375 0.00700 0.0 0.0 3.59974</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2013,10 +1229,10 @@
     </model>
     <model name="cl_l_1_3">
       <static>true</static>
-      <pose>-4.12076 -2.27268 0.00700 0 0 2.68344</pose>
+      <pose>-7.12076 2.27268 0.00700 0.0 0.0 3.59974</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2027,10 +1243,66 @@
     </model>
     <model name="cl_l_2_3">
       <static>true</static>
-      <pose>-4.35694 -2.75161 0.00700 0 0 2.68344</pose>
+      <pose>-7.35694 2.75161 0.00700 0.0 0.0 3.59974</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_4">
+      <static>true</static>
+      <pose>7.40781 2.10694 0.00250 0.0 0.0 -0.58905</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_4">
+      <static>true</static>
+      <pose>7.11114 1.66294 0.00700 0.0 0.0 -0.58905</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_4">
+      <static>true</static>
+      <pose>7.40781 2.10694 0.00700 0.0 0.0 -0.58905</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_4">
+      <static>true</static>
+      <pose>7.70449 2.55095 0.00700 0.0 0.0 -0.58905</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2041,10 +1313,10 @@
     </model>
     <model name="road_l_4">
       <static>true</static>
-      <pose>-4.40365 -2.10071 0.00250 0.0 0.0 2.55254</pose>
+      <pose>-7.40781 2.10694 0.00250 0.0 0.0 3.73064</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2055,10 +1327,10 @@
     </model>
     <model name="cl_l_0_4">
       <static>true</static>
-      <pose>-4.11114 -1.66294 0.00700 0 0 2.55254</pose>
+      <pose>-7.11114 1.66294 0.00700 0.0 0.0 3.73064</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2069,10 +1341,10 @@
     </model>
     <model name="cl_l_1_4">
       <static>true</static>
-      <pose>-4.40781 -2.10694 0.00700 0 0 2.55254</pose>
+      <pose>-7.40781 2.10694 0.00700 0.0 0.0 3.73064</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2083,10 +1355,66 @@
     </model>
     <model name="cl_l_2_4">
       <static>true</static>
-      <pose>-4.70449 -2.55095 0.00700 0 0 2.55254</pose>
+      <pose>-7.70449 2.55095 0.00700 0.0 0.0 3.73064</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_5">
+      <static>true</static>
+      <pose>7.67078 1.90516 0.00250 0.0 0.0 -0.71995</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_5">
+      <static>true</static>
+      <pose>7.31869 1.50368 0.00700 0.0 0.0 -0.71995</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_5">
+      <static>true</static>
+      <pose>7.67078 1.90516 0.00700 0.0 0.0 -0.71995</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_5">
+      <static>true</static>
+      <pose>8.02287 2.30664 0.00700 0.0 0.0 -0.71995</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2097,10 +1425,10 @@
     </model>
     <model name="road_l_5">
       <static>true</static>
-      <pose>-4.66584 -1.89952 0.00250 0.0 0.0 2.42164</pose>
+      <pose>-7.67078 1.90516 0.00250 0.0 0.0 3.86154</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2111,10 +1439,10 @@
     </model>
     <model name="cl_l_0_5">
       <static>true</static>
-      <pose>-4.31869 -1.50368 0.00700 0 0 2.42164</pose>
+      <pose>-7.31869 1.50368 0.00700 0.0 0.0 3.86154</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2125,10 +1453,10 @@
     </model>
     <model name="cl_l_1_5">
       <static>true</static>
-      <pose>-4.67078 -1.90516 0.00700 0 0 2.42164</pose>
+      <pose>-7.67078 1.90516 0.00700 0.0 0.0 3.86154</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2139,10 +1467,66 @@
     </model>
     <model name="cl_l_2_5">
       <static>true</static>
-      <pose>-5.02287 -2.30664 0.00700 0 0 2.42164</pose>
+      <pose>-8.02287 2.30664 0.00700 0.0 0.0 3.86154</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_6">
+      <static>true</static>
+      <pose>7.90516 1.67078 0.00250 0.0 0.0 -0.85085</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_6">
+      <static>true</static>
+      <pose>7.50368 1.31869 0.00700 0.0 0.0 -0.85085</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_6">
+      <static>true</static>
+      <pose>7.90516 1.67078 0.00700 0.0 0.0 -0.85085</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_6">
+      <static>true</static>
+      <pose>8.30664 2.02287 0.00700 0.0 0.0 -0.85085</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2153,10 +1537,10 @@
     </model>
     <model name="road_l_6">
       <static>true</static>
-      <pose>-4.89952 -1.66584 0.00250 0.0 0.0 2.29074</pose>
+      <pose>-7.90516 1.67078 0.00250 0.0 0.0 3.99244</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2167,10 +1551,10 @@
     </model>
     <model name="cl_l_0_6">
       <static>true</static>
-      <pose>-4.50368 -1.31869 0.00700 0 0 2.29074</pose>
+      <pose>-7.50368 1.31869 0.00700 0.0 0.0 3.99244</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2181,10 +1565,10 @@
     </model>
     <model name="cl_l_1_6">
       <static>true</static>
-      <pose>-4.90516 -1.67078 0.00700 0 0 2.29074</pose>
+      <pose>-7.90516 1.67078 0.00700 0.0 0.0 3.99244</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2195,10 +1579,66 @@
     </model>
     <model name="cl_l_2_6">
       <static>true</static>
-      <pose>-5.30665 -2.02287 0.00700 0 0 2.29074</pose>
+      <pose>-8.30664 2.02287 0.00700 0.0 0.0 3.99244</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_7">
+      <static>true</static>
+      <pose>8.10694 1.40781 0.00250 0.0 0.0 -0.98175</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_7">
+      <static>true</static>
+      <pose>7.66294 1.11114 0.00700 0.0 0.0 -0.98175</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_7">
+      <static>true</static>
+      <pose>8.10694 1.40781 0.00700 0.0 0.0 -0.98175</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_7">
+      <static>true</static>
+      <pose>8.55095 1.70449 0.00700 0.0 0.0 -0.98175</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2209,10 +1649,10 @@
     </model>
     <model name="road_l_7">
       <static>true</static>
-      <pose>-5.10071 -1.40365 0.00250 0.0 0.0 2.15984</pose>
+      <pose>-8.10694 1.40781 0.00250 0.0 0.0 4.12334</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2223,10 +1663,10 @@
     </model>
     <model name="cl_l_0_7">
       <static>true</static>
-      <pose>-4.66294 -1.11114 0.00700 0 0 2.15984</pose>
+      <pose>-7.66294 1.11114 0.00700 0.0 0.0 4.12334</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2237,10 +1677,10 @@
     </model>
     <model name="cl_l_1_7">
       <static>true</static>
-      <pose>-5.10694 -1.40781 0.00700 0 0 2.15984</pose>
+      <pose>-8.10694 1.40781 0.00700 0.0 0.0 4.12334</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2251,10 +1691,66 @@
     </model>
     <model name="cl_l_2_7">
       <static>true</static>
-      <pose>-5.55095 -1.70449 0.00700 0 0 2.15984</pose>
+      <pose>-8.55095 1.70449 0.00700 0.0 0.0 4.12334</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_8">
+      <static>true</static>
+      <pose>8.27268 1.12076 0.00250 0.0 0.0 -1.11265</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_8">
+      <static>true</static>
+      <pose>7.79375 0.88458 0.00700 0.0 0.0 -1.11265</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_8">
+      <static>true</static>
+      <pose>8.27268 1.12076 0.00700 0.0 0.0 -1.11265</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_8">
+      <static>true</static>
+      <pose>8.75161 1.35694 0.00700 0.0 0.0 -1.11265</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2265,10 +1761,10 @@
     </model>
     <model name="road_l_8">
       <static>true</static>
-      <pose>-5.26595 -1.11744 0.00250 0.0 0.0 2.02895</pose>
+      <pose>-8.27268 1.12076 0.00250 0.0 0.0 4.25424</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2279,10 +1775,10 @@
     </model>
     <model name="cl_l_0_8">
       <static>true</static>
-      <pose>-4.79375 -0.88458 0.00700 0 0 2.02895</pose>
+      <pose>-7.79375 0.88458 0.00700 0.0 0.0 4.25424</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2293,10 +1789,10 @@
     </model>
     <model name="cl_l_1_8">
       <static>true</static>
-      <pose>-5.27268 -1.12076 0.00700 0 0 2.02895</pose>
+      <pose>-8.27268 1.12076 0.00700 0.0 0.0 4.25424</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2307,10 +1803,66 @@
     </model>
     <model name="cl_l_2_8">
       <static>true</static>
-      <pose>-5.75161 -1.35694 0.00700 0 0 2.02895</pose>
+      <pose>-8.75161 1.35694 0.00700 0.0 0.0 4.25424</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_9">
+      <static>true</static>
+      <pose>8.39952 0.81453 0.00250 0.0 0.0 -1.24355</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_9">
+      <static>true</static>
+      <pose>7.89386 0.64288 0.00700 0.0 0.0 -1.24355</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_9">
+      <static>true</static>
+      <pose>8.39952 0.81453 0.00700 0.0 0.0 -1.24355</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_9">
+      <static>true</static>
+      <pose>8.90518 0.98618 0.00700 0.0 0.0 -1.24355</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2321,10 +1873,10 @@
     </model>
     <model name="road_l_9">
       <static>true</static>
-      <pose>-5.39242 -0.81211 0.00250 0.0 0.0 1.89805</pose>
+      <pose>-8.39952 0.81453 0.00250 0.0 0.0 4.38514</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2335,10 +1887,10 @@
     </model>
     <model name="cl_l_0_9">
       <static>true</static>
-      <pose>-4.89386 -0.64288 0.00700 0 0 1.89805</pose>
+      <pose>-7.89386 0.64288 0.00700 0.0 0.0 4.38514</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2349,10 +1901,10 @@
     </model>
     <model name="cl_l_1_9">
       <static>true</static>
-      <pose>-5.39952 -0.81453 0.00700 0 0 1.89805</pose>
+      <pose>-8.39952 0.81453 0.00700 0.0 0.0 4.38514</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2363,10 +1915,66 @@
     </model>
     <model name="cl_l_2_9">
       <static>true</static>
-      <pose>-5.90518 -0.98618 0.00700 0 0 1.89805</pose>
+      <pose>-8.90518 0.98618 0.00700 0.0 0.0 4.38514</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_10">
+      <static>true</static>
+      <pose>8.48531 0.49436 0.00250 0.0 0.0 -1.37445</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_10">
+      <static>true</static>
+      <pose>7.96157 0.39018 0.00700 0.0 0.0 -1.37445</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_10">
+      <static>true</static>
+      <pose>8.48531 0.49436 0.00700 0.0 0.0 -1.37445</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_10">
+      <static>true</static>
+      <pose>9.00905 0.59854 0.00700 0.0 0.0 -1.37445</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2377,10 +1985,10 @@
     </model>
     <model name="road_l_10">
       <static>true</static>
-      <pose>-5.47795 -0.49290 0.00250 0.0 0.0 1.76715</pose>
+      <pose>-8.48531 0.49436 0.00250 0.0 0.0 4.51604</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2391,10 +1999,10 @@
     </model>
     <model name="cl_l_0_10">
       <static>true</static>
-      <pose>-4.96157 -0.39018 0.00700 0 0 1.76715</pose>
+      <pose>-7.96157 0.39018 0.00700 0.0 0.0 4.51604</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2405,10 +2013,10 @@
     </model>
     <model name="cl_l_1_10">
       <static>true</static>
-      <pose>-5.48531 -0.49436 0.00700 0 0 1.76715</pose>
+      <pose>-8.48531 0.49436 0.00700 0.0 0.0 4.51604</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2419,10 +2027,66 @@
     </model>
     <model name="cl_l_2_10">
       <static>true</static>
-      <pose>-6.00905 -0.59854 0.00700 0 0 1.76715</pose>
+      <pose>-9.00905 0.59854 0.00700 0.0 0.0 4.51604</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_11">
+      <static>true</static>
+      <pose>8.52857 0.16573 0.00250 0.0 0.0 -1.50535</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_11">
+      <static>true</static>
+      <pose>7.99572 0.13081 0.00700 0.0 0.0 -1.50535</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_11">
+      <static>true</static>
+      <pose>8.52857 0.16573 0.00700 0.0 0.0 -1.50535</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_11">
+      <static>true</static>
+      <pose>9.06143 0.20066 0.00700 0.0 0.0 -1.50535</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2433,10 +2097,10 @@
     </model>
     <model name="road_l_11">
       <static>true</static>
-      <pose>-5.52109 -0.16524 0.00250 0.0 0.0 1.63625</pose>
+      <pose>-8.52857 0.16573 0.00250 0.0 0.0 4.64694</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2447,10 +2111,10 @@
     </model>
     <model name="cl_l_0_11">
       <static>true</static>
-      <pose>-4.99572 -0.13081 0.00700 0 0 1.63625</pose>
+      <pose>-7.99572 0.13081 0.00700 0.0 0.0 4.64694</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2461,10 +2125,10 @@
     </model>
     <model name="cl_l_1_11">
       <static>true</static>
-      <pose>-5.52858 -0.16573 0.00700 0 0 1.63625</pose>
+      <pose>-8.52857 0.16573 0.00700 0.0 0.0 4.64694</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2475,10 +2139,66 @@
     </model>
     <model name="cl_l_2_11">
       <static>true</static>
-      <pose>-6.06143 -0.20066 0.00700 0 0 1.63625</pose>
+      <pose>-9.06143 0.20066 0.00700 0.0 0.0 4.64694</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_12">
+      <static>true</static>
+      <pose>8.52857 -0.16573 0.00250 0.0 0.0 -1.63625</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_12">
+      <static>true</static>
+      <pose>7.99572 -0.13081 0.00700 0.0 0.0 -1.63625</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_12">
+      <static>true</static>
+      <pose>8.52857 -0.16573 0.00700 0.0 0.0 -1.63625</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_12">
+      <static>true</static>
+      <pose>9.06143 -0.20066 0.00700 0.0 0.0 -1.63625</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2489,10 +2209,10 @@
     </model>
     <model name="road_l_12">
       <static>true</static>
-      <pose>-5.52109 0.16524 0.00250 0.0 0.0 1.50535</pose>
+      <pose>-8.52857 -0.16573 0.00250 0.0 0.0 4.77784</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2503,10 +2223,10 @@
     </model>
     <model name="cl_l_0_12">
       <static>true</static>
-      <pose>-4.99572 0.13081 0.00700 0 0 1.50535</pose>
+      <pose>-7.99572 -0.13081 0.00700 0.0 0.0 4.77784</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2517,10 +2237,10 @@
     </model>
     <model name="cl_l_1_12">
       <static>true</static>
-      <pose>-5.52857 0.16573 0.00700 0 0 1.50535</pose>
+      <pose>-8.52857 -0.16573 0.00700 0.0 0.0 4.77784</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2531,10 +2251,66 @@
     </model>
     <model name="cl_l_2_12">
       <static>true</static>
-      <pose>-6.06143 0.20066 0.00700 0 0 1.50535</pose>
+      <pose>-9.06143 -0.20066 0.00700 0.0 0.0 4.77784</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_13">
+      <static>true</static>
+      <pose>8.48531 -0.49436 0.00250 0.0 0.0 -1.76715</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_13">
+      <static>true</static>
+      <pose>7.96157 -0.39018 0.00700 0.0 0.0 -1.76715</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_13">
+      <static>true</static>
+      <pose>8.48531 -0.49436 0.00700 0.0 0.0 -1.76715</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_13">
+      <static>true</static>
+      <pose>9.00905 -0.59854 0.00700 0.0 0.0 -1.76715</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2545,10 +2321,10 @@
     </model>
     <model name="road_l_13">
       <static>true</static>
-      <pose>-5.47795 0.49290 0.00250 0.0 0.0 1.37445</pose>
+      <pose>-8.48531 -0.49436 0.00250 0.0 0.0 4.90874</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2559,10 +2335,10 @@
     </model>
     <model name="cl_l_0_13">
       <static>true</static>
-      <pose>-4.96157 0.39018 0.00700 0 0 1.37445</pose>
+      <pose>-7.96157 -0.39018 0.00700 0.0 0.0 4.90874</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2573,10 +2349,10 @@
     </model>
     <model name="cl_l_1_13">
       <static>true</static>
-      <pose>-5.48531 0.49436 0.00700 0 0 1.37445</pose>
+      <pose>-8.48531 -0.49436 0.00700 0.0 0.0 4.90874</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2587,10 +2363,66 @@
     </model>
     <model name="cl_l_2_13">
       <static>true</static>
-      <pose>-6.00905 0.59854 0.00700 0 0 1.37445</pose>
+      <pose>-9.00905 -0.59854 0.00700 0.0 0.0 4.90874</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_14">
+      <static>true</static>
+      <pose>8.39952 -0.81453 0.00250 0.0 0.0 -1.89805</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_14">
+      <static>true</static>
+      <pose>7.89386 -0.64288 0.00700 0.0 0.0 -1.89805</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_14">
+      <static>true</static>
+      <pose>8.39952 -0.81453 0.00700 0.0 0.0 -1.89805</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_14">
+      <static>true</static>
+      <pose>8.90518 -0.98618 0.00700 0.0 0.0 -1.89805</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2601,10 +2433,10 @@
     </model>
     <model name="road_l_14">
       <static>true</static>
-      <pose>-5.39242 0.81212 0.00250 0.0 0.0 1.24355</pose>
+      <pose>-8.39952 -0.81453 0.00250 0.0 0.0 5.03964</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2615,10 +2447,10 @@
     </model>
     <model name="cl_l_0_14">
       <static>true</static>
-      <pose>-4.89386 0.64288 0.00700 0 0 1.24355</pose>
+      <pose>-7.89386 -0.64288 0.00700 0.0 0.0 5.03964</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2629,10 +2461,10 @@
     </model>
     <model name="cl_l_1_14">
       <static>true</static>
-      <pose>-5.39952 0.81453 0.00700 0 0 1.24355</pose>
+      <pose>-8.39952 -0.81453 0.00700 0.0 0.0 5.03964</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2643,10 +2475,66 @@
     </model>
     <model name="cl_l_2_14">
       <static>true</static>
-      <pose>-5.90518 0.98617 0.00700 0 0 1.24355</pose>
+      <pose>-8.90518 -0.98618 0.00700 0.0 0.0 5.03964</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_15">
+      <static>true</static>
+      <pose>8.27268 -1.12076 0.00250 0.0 0.0 -2.02895</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_15">
+      <static>true</static>
+      <pose>7.79375 -0.88458 0.00700 0.0 0.0 -2.02895</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_15">
+      <static>true</static>
+      <pose>8.27268 -1.12076 0.00700 0.0 0.0 -2.02895</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_15">
+      <static>true</static>
+      <pose>8.75161 -1.35694 0.00700 0.0 0.0 -2.02895</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2657,10 +2545,10 @@
     </model>
     <model name="road_l_15">
       <static>true</static>
-      <pose>-5.26595 1.11744 0.00250 0.0 0.0 1.11265</pose>
+      <pose>-8.27268 -1.12076 0.00250 0.0 0.0 5.17054</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2671,10 +2559,10 @@
     </model>
     <model name="cl_l_0_15">
       <static>true</static>
-      <pose>-4.79375 0.88458 0.00700 0 0 1.11265</pose>
+      <pose>-7.79375 -0.88458 0.00700 0.0 0.0 5.17054</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2685,10 +2573,10 @@
     </model>
     <model name="cl_l_1_15">
       <static>true</static>
-      <pose>-5.27268 1.12076 0.00700 0 0 1.11265</pose>
+      <pose>-8.27268 -1.12076 0.00700 0.0 0.0 5.17054</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2699,10 +2587,66 @@
     </model>
     <model name="cl_l_2_15">
       <static>true</static>
-      <pose>-5.75161 1.35694 0.00700 0 0 1.11265</pose>
+      <pose>-8.75161 -1.35694 0.00700 0.0 0.0 5.17054</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_16">
+      <static>true</static>
+      <pose>8.10694 -1.40781 0.00250 0.0 0.0 -2.15984</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_16">
+      <static>true</static>
+      <pose>7.66294 -1.11114 0.00700 0.0 0.0 -2.15984</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_16">
+      <static>true</static>
+      <pose>8.10694 -1.40781 0.00700 0.0 0.0 -2.15984</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_16">
+      <static>true</static>
+      <pose>8.55095 -1.70449 0.00700 0.0 0.0 -2.15984</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2713,10 +2657,10 @@
     </model>
     <model name="road_l_16">
       <static>true</static>
-      <pose>-5.10071 1.40365 0.00250 0.0 0.0 0.98175</pose>
+      <pose>-8.10694 -1.40781 0.00250 0.0 0.0 5.30144</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2727,10 +2671,10 @@
     </model>
     <model name="cl_l_0_16">
       <static>true</static>
-      <pose>-4.66294 1.11114 0.00700 0 0 0.98175</pose>
+      <pose>-7.66294 -1.11114 0.00700 0.0 0.0 5.30144</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2741,10 +2685,10 @@
     </model>
     <model name="cl_l_1_16">
       <static>true</static>
-      <pose>-5.10694 1.40781 0.00700 0 0 0.98175</pose>
+      <pose>-8.10694 -1.40781 0.00700 0.0 0.0 5.30144</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2755,10 +2699,66 @@
     </model>
     <model name="cl_l_2_16">
       <static>true</static>
-      <pose>-5.55095 1.70449 0.00700 0 0 0.98175</pose>
+      <pose>-8.55095 -1.70449 0.00700 0.0 0.0 5.30144</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_17">
+      <static>true</static>
+      <pose>7.90516 -1.67078 0.00250 0.0 0.0 -2.29074</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_17">
+      <static>true</static>
+      <pose>7.50368 -1.31869 0.00700 0.0 0.0 -2.29074</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_17">
+      <static>true</static>
+      <pose>7.90516 -1.67078 0.00700 0.0 0.0 -2.29074</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_17">
+      <static>true</static>
+      <pose>8.30664 -2.02287 0.00700 0.0 0.0 -2.29074</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2769,10 +2769,10 @@
     </model>
     <model name="road_l_17">
       <static>true</static>
-      <pose>-4.89952 1.66584 0.00250 0.0 0.0 0.85085</pose>
+      <pose>-7.90516 -1.67078 0.00250 0.0 0.0 5.43234</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2783,10 +2783,10 @@
     </model>
     <model name="cl_l_0_17">
       <static>true</static>
-      <pose>-4.50368 1.31869 0.00700 0 0 0.85085</pose>
+      <pose>-7.50368 -1.31869 0.00700 0.0 0.0 5.43234</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2797,10 +2797,10 @@
     </model>
     <model name="cl_l_1_17">
       <static>true</static>
-      <pose>-4.90516 1.67078 0.00700 0 0 0.85085</pose>
+      <pose>-7.90516 -1.67078 0.00700 0.0 0.0 5.43234</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2811,10 +2811,66 @@
     </model>
     <model name="cl_l_2_17">
       <static>true</static>
-      <pose>-5.30664 2.02287 0.00700 0 0 0.85085</pose>
+      <pose>-8.30664 -2.02287 0.00700 0.0 0.0 5.43234</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_18">
+      <static>true</static>
+      <pose>7.67078 -1.90516 0.00250 0.0 0.0 -2.42164</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_18">
+      <static>true</static>
+      <pose>7.31869 -1.50368 0.00700 0.0 0.0 -2.42164</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_18">
+      <static>true</static>
+      <pose>7.67078 -1.90516 0.00700 0.0 0.0 -2.42164</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_18">
+      <static>true</static>
+      <pose>8.02287 -2.30664 0.00700 0.0 0.0 -2.42164</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2825,10 +2881,10 @@
     </model>
     <model name="road_l_18">
       <static>true</static>
-      <pose>-4.66584 1.89952 0.00250 0.0 0.0 0.71995</pose>
+      <pose>-7.67078 -1.90516 0.00250 0.0 0.0 5.56324</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2839,10 +2895,10 @@
     </model>
     <model name="cl_l_0_18">
       <static>true</static>
-      <pose>-4.31869 1.50368 0.00700 0 0 0.71995</pose>
+      <pose>-7.31869 -1.50368 0.00700 0.0 0.0 5.56324</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2853,10 +2909,10 @@
     </model>
     <model name="cl_l_1_18">
       <static>true</static>
-      <pose>-4.67078 1.90516 0.00700 0 0 0.71995</pose>
+      <pose>-7.67078 -1.90516 0.00700 0.0 0.0 5.56324</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2867,10 +2923,66 @@
     </model>
     <model name="cl_l_2_18">
       <static>true</static>
-      <pose>-5.02287 2.30665 0.00700 0 0 0.71995</pose>
+      <pose>-8.02287 -2.30664 0.00700 0.0 0.0 5.56324</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_19">
+      <static>true</static>
+      <pose>7.40781 -2.10694 0.00250 0.0 0.0 -2.55254</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_19">
+      <static>true</static>
+      <pose>7.11114 -1.66294 0.00700 0.0 0.0 -2.55254</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_19">
+      <static>true</static>
+      <pose>7.40781 -2.10694 0.00700 0.0 0.0 -2.55254</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_19">
+      <static>true</static>
+      <pose>7.70449 -2.55095 0.00700 0.0 0.0 -2.55254</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2881,10 +2993,10 @@
     </model>
     <model name="road_l_19">
       <static>true</static>
-      <pose>-4.40365 2.10071 0.00250 0.0 0.0 0.58905</pose>
+      <pose>-7.40781 -2.10694 0.00250 0.0 0.0 5.69414</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2895,10 +3007,10 @@
     </model>
     <model name="cl_l_0_19">
       <static>true</static>
-      <pose>-4.11114 1.66294 0.00700 0 0 0.58905</pose>
+      <pose>-7.11114 -1.66294 0.00700 0.0 0.0 5.69414</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2909,10 +3021,10 @@
     </model>
     <model name="cl_l_1_19">
       <static>true</static>
-      <pose>-4.40781 2.10694 0.00700 0 0 0.58905</pose>
+      <pose>-7.40781 -2.10694 0.00700 0.0 0.0 5.69414</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2923,10 +3035,66 @@
     </model>
     <model name="cl_l_2_19">
       <static>true</static>
-      <pose>-4.70449 2.55095 0.00700 0 0 0.58905</pose>
+      <pose>-7.70449 -2.55095 0.00700 0.0 0.0 5.69414</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_20">
+      <static>true</static>
+      <pose>7.12076 -2.27268 0.00250 0.0 0.0 -2.68344</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_20">
+      <static>true</static>
+      <pose>6.88458 -1.79375 0.00700 0.0 0.0 -2.68344</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_20">
+      <static>true</static>
+      <pose>7.12076 -2.27268 0.00700 0.0 0.0 -2.68344</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_20">
+      <static>true</static>
+      <pose>7.35694 -2.75161 0.00700 0.0 0.0 -2.68344</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2937,10 +3105,10 @@
     </model>
     <model name="road_l_20">
       <static>true</static>
-      <pose>-4.11744 2.26595 0.00250 0.0 0.0 0.45815</pose>
+      <pose>-7.12076 -2.27268 0.00250 0.0 0.0 5.82504</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -2951,10 +3119,10 @@
     </model>
     <model name="cl_l_0_20">
       <static>true</static>
-      <pose>-3.88458 1.79375 0.00700 0 0 0.45815</pose>
+      <pose>-6.88458 -1.79375 0.00700 0.0 0.0 5.82504</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2965,10 +3133,10 @@
     </model>
     <model name="cl_l_1_20">
       <static>true</static>
-      <pose>-4.12076 2.27268 0.00700 0 0 0.45815</pose>
+      <pose>-7.12076 -2.27268 0.00700 0.0 0.0 5.82504</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2979,10 +3147,66 @@
     </model>
     <model name="cl_l_2_20">
       <static>true</static>
-      <pose>-4.35694 2.75161 0.00700 0 0 0.45815</pose>
+      <pose>-7.35694 -2.75161 0.00700 0.0 0.0 5.82504</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_21">
+      <static>true</static>
+      <pose>6.81453 -2.39952 0.00250 0.0 0.0 -2.81434</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_21">
+      <static>true</static>
+      <pose>6.64288 -1.89386 0.00700 0.0 0.0 -2.81434</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_21">
+      <static>true</static>
+      <pose>6.81453 -2.39952 0.00700 0.0 0.0 -2.81434</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_21">
+      <static>true</static>
+      <pose>6.98618 -2.90518 0.00700 0.0 0.0 -2.81434</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -2993,10 +3217,10 @@
     </model>
     <model name="road_l_21">
       <static>true</static>
-      <pose>-3.81211 2.39242 0.00250 0.0 0.0 0.32725</pose>
+      <pose>-6.81453 -2.39952 0.00250 0.0 0.0 5.95594</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -3007,10 +3231,10 @@
     </model>
     <model name="cl_l_0_21">
       <static>true</static>
-      <pose>-3.64288 1.89386 0.00700 0 0 0.32725</pose>
+      <pose>-6.64288 -1.89386 0.00700 0.0 0.0 5.95594</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3021,10 +3245,10 @@
     </model>
     <model name="cl_l_1_21">
       <static>true</static>
-      <pose>-3.81453 2.39952 0.00700 0 0 0.32725</pose>
+      <pose>-6.81453 -2.39952 0.00700 0.0 0.0 5.95594</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3035,10 +3259,66 @@
     </model>
     <model name="cl_l_2_21">
       <static>true</static>
-      <pose>-3.98618 2.90518 0.00700 0 0 0.32725</pose>
+      <pose>-6.98618 -2.90518 0.00700 0.0 0.0 5.95594</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_22">
+      <static>true</static>
+      <pose>6.49436 -2.48531 0.00250 0.0 0.0 -2.94524</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_22">
+      <static>true</static>
+      <pose>6.39018 -1.96157 0.00700 0.0 0.0 -2.94524</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_22">
+      <static>true</static>
+      <pose>6.49436 -2.48531 0.00700 0.0 0.0 -2.94524</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_22">
+      <static>true</static>
+      <pose>6.59854 -3.00905 0.00700 0.0 0.0 -2.94524</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3049,10 +3329,10 @@
     </model>
     <model name="road_l_22">
       <static>true</static>
-      <pose>-3.49290 2.47795 0.00250 0.0 0.0 0.19635</pose>
+      <pose>-6.49436 -2.48531 0.00250 0.0 0.0 6.08684</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -3063,10 +3343,10 @@
     </model>
     <model name="cl_l_0_22">
       <static>true</static>
-      <pose>-3.39018 1.96157 0.00700 0 0 0.19635</pose>
+      <pose>-6.39018 -1.96157 0.00700 0.0 0.0 6.08684</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3077,10 +3357,10 @@
     </model>
     <model name="cl_l_1_22">
       <static>true</static>
-      <pose>-3.49436 2.48531 0.00700 0 0 0.19635</pose>
+      <pose>-6.49436 -2.48531 0.00700 0.0 0.0 6.08684</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3091,10 +3371,66 @@
     </model>
     <model name="cl_l_2_22">
       <static>true</static>
-      <pose>-3.59854 3.00905 0.00700 0 0 0.19635</pose>
+      <pose>-6.59854 -3.00905 0.00700 0.0 0.0 6.08684</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="road_r_23">
+      <static>true</static>
+      <pose>6.16573 -2.52857 0.00250 0.0 0.0 -3.07614</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
+          <material>
+            <ambient>0.030 0.030 0.030 1</ambient>
+            <diffuse>0.050 0.050 0.050 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_0_23">
+      <static>true</static>
+      <pose>6.13081 -1.99572 0.00700 0.0 0.0 -3.07614</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_1_23">
+      <static>true</static>
+      <pose>6.16573 -2.52857 0.00700 0.0 0.0 -3.07614</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
+          <material>
+            <ambient>1.000 1.000 1.000 1</ambient>
+            <diffuse>1.000 1.000 1.000 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+    <model name="cl_r_2_23">
+      <static>true</static>
+      <pose>6.20066 -3.06143 0.00700 0.0 0.0 -3.07614</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3105,10 +3441,10 @@
     </model>
     <model name="road_l_23">
       <static>true</static>
-      <pose>-3.16524 2.52109 0.00250 0.0 0.0 0.06545</pose>
+      <pose>-6.16573 -2.52857 0.00250 0.0 0.0 6.21774</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.38165 1.06800 0.00500</size></box></geometry>
+          <geometry><box><size>0.38284 1.06800 0.00500</size></box></geometry>
           <material>
             <ambient>0.030 0.030 0.030 1</ambient>
             <diffuse>0.050 0.050 0.050 1</diffuse>
@@ -3119,10 +3455,10 @@
     </model>
     <model name="cl_l_0_23">
       <static>true</static>
-      <pose>-3.13081 1.99572 0.00700 0 0 0.06545</pose>
+      <pose>-6.13081 -1.99572 0.00700 0.0 0.0 6.21774</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.27180 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.27208 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3133,10 +3469,10 @@
     </model>
     <model name="cl_l_1_23">
       <static>true</static>
-      <pose>-3.16573 2.52858 0.00700 0 0 0.06545</pose>
+      <pose>-6.16573 -2.52857 0.00700 0.0 0.0 6.21774</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.34170 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.34472 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3147,10 +3483,10 @@
     </model>
     <model name="cl_l_2_23">
       <static>true</static>
-      <pose>-3.20066 3.06143 0.00700 0 0 0.06545</pose>
+      <pose>-6.20066 -3.06143 0.00700 0.0 0.0 6.21774</pose>
       <link name="link">
         <visual name="visual">
-          <geometry><box><size>0.41160 0.04000 0.00400</size></box></geometry>
+          <geometry><box><size>0.41737 0.04000 0.00400</size></box></geometry>
           <material>
             <ambient>1.000 1.000 1.000 1</ambient>
             <diffuse>1.000 1.000 1.000 1</diffuse>
@@ -3159,6 +3495,5 @@
         </visual>
       </link>
     </model>
-
   </world>
 </sdf>
