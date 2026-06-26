@@ -94,12 +94,14 @@ def generate_launch_description():
         output='screen',
     )
 
-    # Relay ~/tf_odometry → /tf dùng TransformBroadcaster (đúng QoS cho tf2)
-    tf_relay_node = Node(
-        package='main_bot',
-        executable='odom_tf_relay.py',
-        name='odom_tf_relay',
-        parameters=[{'use_sim_time': True}],
+    # EKF: fuse wheel odometry + IMU → /odometry/filtered + TF odom→base_footprint
+    ekf_config = os.path.join(pkg_path, 'config', 'ekf.yaml')
+    ekf_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_node',
+        parameters=[ekf_config],
+        remappings=[('odometry/filtered', '/odometry/filtered')],
         output='screen',
     )
 
@@ -131,9 +133,9 @@ def generate_launch_description():
         robot_state_publisher_node,
         bridge_node,
         twist_stamper_node,
-        tf_relay_node,
         TimerAction(period=8.0,  actions=[spawn_node]),
         TimerAction(period=12.0, actions=[joint_state_broadcaster_spawner]),
         TimerAction(period=14.0, actions=[ackermann_steering_controller_spawner]),
+        TimerAction(period=15.0, actions=[ekf_node]),
         TimerAction(period=16.0, actions=[lane_follower_node, lane_control_node]),
     ])

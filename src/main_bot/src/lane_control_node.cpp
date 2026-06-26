@@ -32,7 +32,7 @@ class LaneControlNode : public rclcpp::Node
 public:
   LaneControlNode() : Node("lane_control_node")
   {
-    this->declare_parameter("speed",        5.0);
+    this->declare_parameter("speed",        8.0);
     this->declare_parameter("k",            0.30);
     this->declare_parameter("max_steer",    0.52);
     this->declare_parameter("timeout",      0.5);
@@ -157,7 +157,7 @@ private:
   }
 
   // ── Parameters ───────────────────────────────────────────────────────────
-  double speed_{0.10};
+  double speed_{8.0};
   double k_{0.30};
   double max_steer_{0.52};
   double timeout_{0.5};

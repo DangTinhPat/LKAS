@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ─── IMU dimensions ─── -->
+  <!--
+    Chiều dài 0.030m → dọc theo Y (vuông góc với X, theo yêu cầu "đặt ngang")
+    Chiều rộng 0.020m → dọc theo X
+    Độ dày 0.003m (3mm) → dọc theo Z
+  -->
+  <xacro:property name="imu_length"    value="0.030"/>
+  <xacro:property name="imu_width"     value="0.020"/>
+  <xacro:property name="imu_thickness" value="0.003"/>
+
+  <!-- ─── Material ─── -->
+  <material name="red">
+    <color rgba="1.0 0.0 0.0 1.0"/>
+  </material>
+
+  <!-- ─── Link ─── -->
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <!-- size: X=width(0.02), Y=length(0.03), Z=thickness(0.003) -->
+        <box size="${imu_width} ${imu_length} ${imu_thickness}"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${imu_width} ${imu_length} ${imu_thickness}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.001"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <!-- ─── Joint: đặt tại tâm mặt trên chassis ─── -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="imu_link"/>
+    <origin xyz="0 0 ${chassis_height/2 + imu_thickness/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ─── Gazebo sensor ─── -->
+  <gazebo reference="imu_link">
+    <material>Gazebo/Red</material>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>1</always_on>
+      <update_rate>100</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <gz_frame_id>imu_link</gz_frame_id>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>0.002</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>0.002</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>0.002</stddev></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>0.017</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo>
+
+</robot>
