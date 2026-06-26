@@ -8,10 +8,11 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
 
 # ── C++ nodes ────────────────────────────────────────────────────────────────
 add_executable(lane_control_node src/lane_control_node.cpp)
-ament_target_dependencies(lane_control_node rclcpp geometry_msgs)
+ament_target_dependencies(lane_control_node rclcpp geometry_msgs nav_msgs)
 
 install(TARGETS lane_control_node
   DESTINATION lib/${PROJECT_NAME}

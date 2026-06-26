@@ -5,15 +5,22 @@
 
 #include "geometry_msgs/msg/twist.hpp"
 #include "geometry_msgs/msg/vector3.hpp"
+#include "nav_msgs/msg/odometry.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 using namespace std::chrono_literals;
 
-// ── Sơ đồ điều khiển (Stanley + Feed-forward curvature) ─────────────────────
+// ── Sơ đồ điều khiển (Stanley + Feed-forward curvature + Odometry kappa) ────
 //
-//  kappa ──→ delta_ff = k_ff · atan(L · κ)        [bù góc cong hình học]
-//  e_psi ──→ [dead-band] ──→ e_psi_corr = e_psi − X_avg·κ  [chỉ còn alignment error]
-//  e_y   ──→ [dead-band] ──→ atan2(k·e_y, v_soft)           [bù lệch ngang]
+//  /odometry/filtered ──→ κ_odom = vyaw / vx   [curvature thực tế, 50 Hz, từ EKF]
+//  /status_err        ──→ κ_vis                [curvature vision, 10 Hz, nhìn trước]
+//                                │
+//            κ_use = kappa_blend·κ_odom + (1−kappa_blend)·κ_vis
+//              (khi vx > kappa_odom_min_vx; fallback κ_vis khi tốc độ thấp)
+//                                │
+//  κ_use ──→ delta_ff = k_ff · atan(L · κ_use)    [bù góc cong hình học]
+//  e_psi ──→ [dead-band] ──→ e_psi_corr = e_psi − X_avg·κ_use
+//  e_y   ──→ [dead-band] ──→ atan2(k·e_y, v_soft)
 //                                          │
 //                    delta = delta_ff + e_psi_corr + atan2(k·e_y, v_soft)
 //                                          │  clamp ±max_steer
@@ -23,9 +30,10 @@ using namespace std::chrono_literals;
 //                                          │
 //                                 angular_z → /cmd_vel
 //
-// Tại sao cần FF:
-//   e_psi (raw) ≈ X_avg·κ = 0.923·κ  ← overshoot 4.4× so với delta_req = L·κ
-//   Sau khi trừ: e_psi_corr ≈ 0 khi bám cua hoàn hảo → FF xử lý curvature ✓
+// Tại sao blend κ_odom + κ_vis:
+//   κ_vis  : predictive (nhìn trước ~0.9m) nhưng nhiễu từ RANSAC
+//   κ_odom : smooth từ EKF gyro/encoder nhưng phản ánh cua hiện tại (không trước)
+//   blend=0.6 → 60% odom (ổn định) + 40% vis (predictive) = cân bằng tốt nhất
 
 class LaneControlNode : public rclcpp::Node
 {
@@ -52,6 +60,13 @@ public:
     //                Dùng để tách curvature ra khỏi e_psi.
     this->declare_parameter("k_ff",         1.00);
     this->declare_parameter("lookahead_x",  0.923);
+    // κ từ odometry:
+    //   kappa_blend      : trọng số κ_odom trong blend [0=all-vision, 1=all-odom]
+    //                      0.6 → 60% odom (ổn định) + 40% vision (predictive)
+    //   kappa_odom_min_vx: tốc độ tối thiểu để κ_odom = vyaw/vx đáng tin [m/s]
+    //                      dưới ngưỡng này fallback κ_vision tránh chia cho 0
+    this->declare_parameter("kappa_blend",       0.60);
+    this->declare_parameter("kappa_odom_min_vx", 0.05);
 
     speed_        = this->get_parameter("speed").as_double();
     k_            = this->get_parameter("k").as_double();
@@ -62,12 +77,18 @@ public:
     alpha_conv_   = this->get_parameter("alpha_conv").as_double();
     db_ey_        = this->get_parameter("db_ey").as_double();
     db_psi_       = this->get_parameter("db_psi").as_double();
-    k_ff_         = this->get_parameter("k_ff").as_double();
-    lookahead_x_  = this->get_parameter("lookahead_x").as_double();
+    k_ff_             = this->get_parameter("k_ff").as_double();
+    lookahead_x_      = this->get_parameter("lookahead_x").as_double();
+    kappa_blend_      = this->get_parameter("kappa_blend").as_double();
+    kappa_odom_min_vx_ = this->get_parameter("kappa_odom_min_vx").as_double();
 
     sub_ = this->create_subscription<geometry_msgs::msg::Vector3>(
       "/status_err", 10,
       std::bind(&LaneControlNode::err_callback, this, std::placeholders::_1));
+
+    sub_odom_ = this->create_subscription<nav_msgs::msg::Odometry>(
+      "/odometry/filtered", 10,
+      std::bind(&LaneControlNode::odom_callback, this, std::placeholders::_1));
 
     pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
@@ -75,12 +96,12 @@ public:
       50ms, std::bind(&LaneControlNode::control_loop, this));
 
     RCLCPP_INFO(this->get_logger(),
-      "Stanley+FF: speed=%.2f  k=%.2f  v_soft=%.2f  "
+      "Stanley+FF+κ-blend: speed=%.2f  k=%.2f  v_soft=%.2f  "
       "alpha=%.2f/%.2f  db_ey=%.3f  db_psi=%.1fdeg  "
-      "k_ff=%.2f  lookahead_x=%.3fm",
+      "k_ff=%.2f  lookahead_x=%.3fm  kappa_blend=%.2f(odom)/%.2f(vis)",
       speed_, k_, v_softening_,
       alpha_, alpha_conv_, db_ey_, db_psi_ * 180.0 / M_PI,
-      k_ff_, lookahead_x_);
+      k_ff_, lookahead_x_, kappa_blend_, 1.0 - kappa_blend_);
   }
 
 private:
@@ -98,6 +119,20 @@ private:
     kappa_         = msg->z;
     last_err_time_ = this->now();
     has_received_  = true;
+  }
+
+  void odom_callback(const nav_msgs::msg::Odometry::SharedPtr msg)
+  {
+    double vx   = msg->twist.twist.linear.x;
+    double vyaw = msg->twist.twist.angular.z;
+    if (vx > kappa_odom_min_vx_) {
+      // κ = vyaw / vx : curvature tức thời, smooth từ EKF 50 Hz
+      // clip ±2.0 tránh spike khi vx vừa vượt ngưỡng
+      kappa_odom_ = std::clamp(vyaw / vx, -2.0, 2.0);
+      odom_valid_ = true;
+    } else {
+      odom_valid_ = false;   // tốc độ thấp, κ_odom không đáng tin
+    }
   }
 
   void control_loop()
@@ -126,16 +161,23 @@ private:
     double e_y_in   = deadband(e_y_,   db_ey_);
     double e_psi_in = deadband(e_psi_, db_psi_);
 
-    // Feed-forward: bù góc cong hình học
-    //   delta_ff   = atan(L · κ)          — lái đúng để bám cung tròn bán kính 1/κ
-    //   e_psi_corr = e_psi − X_avg · κ    — tách curvature ra khỏi e_psi,
-    //                                        chỉ còn thành phần alignment error
-    // Khi bám cua hoàn hảo (e_y≈0, heading thẳng):
-    //   e_psi ≈ X_avg·κ  →  e_psi_corr ≈ 0  →  delta = atan(L·κ)  ✓
-    // Trên đường thẳng (κ=0):
-    //   delta_ff = 0, e_psi_corr = e_psi  →  giống Stanley gốc ✓
-    double delta_ff    = k_ff_ * std::atan(WHEELBASE_M * kappa_);
-    double e_psi_corr  = e_psi_in - lookahead_x_ * kappa_;
+    // ── Tổng hợp κ: blend κ_odom (EKF, smooth) + κ_vision (predictive) ──────
+    // κ_odom = vyaw/vx từ /odometry/filtered — 50 Hz, ổn định, phản ánh cua HIỆN TẠI
+    // κ_vis  = từ camera RANSAC — 10 Hz, nhìn trước ~0.9m, nhưng nhiễu hơn
+    // Khi odom_valid: blend có trọng số → giảm nhiễu vision, giữ tính predictive
+    // Khi !odom_valid (vx thấp): dùng κ_vis hoàn toàn
+    double kappa_use;
+    if (odom_valid_) {
+      kappa_use = kappa_blend_ * kappa_odom_ + (1.0 - kappa_blend_) * kappa_;
+    } else {
+      kappa_use = kappa_;
+    }
+
+    // Feed-forward: bù góc cong hình học với κ đã tổng hợp
+    //   delta_ff   = atan(L · κ)       — lái đúng bám cung tròn
+    //   e_psi_corr = e_psi − X_avg·κ  — chỉ còn alignment error, không còn curvature
+    double delta_ff    = k_ff_ * std::atan(WHEELBASE_M * kappa_use);
+    double e_psi_corr  = e_psi_in - lookahead_x_ * kappa_use;
 
     double v_denom = std::max(v, v_softening_);
     double delta   = delta_ff + e_psi_corr + std::atan2(k_ * e_y_in, v_denom);
@@ -168,17 +210,22 @@ private:
   double db_psi_{0.017};
   double k_ff_{1.00};
   double lookahead_x_{0.923};
+  double kappa_blend_{0.60};
+  double kappa_odom_min_vx_{0.05};
 
   // ── State ────────────────────────────────────────────────────────────────
   double       e_y_{0.0};
   double       e_psi_{0.0};
-  double       kappa_{0.0};
+  double       kappa_{0.0};      // κ từ vision
+  double       kappa_odom_{0.0}; // κ từ odometry (vyaw/vx)
+  bool         odom_valid_{false};
   double       angular_z_smooth_{0.0};
   rclcpp::Time last_err_time_;
   bool         has_received_{false};
 
   // ── ROS interfaces ───────────────────────────────────────────────────────
   rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr sub_;
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr     sub_odom_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr      pub_;
   rclcpp::TimerBase::SharedPtr                                  timer_;
 };

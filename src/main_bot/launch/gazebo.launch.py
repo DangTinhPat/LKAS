@@ -119,7 +119,7 @@ def generate_launch_description():
         name='lane_control_node',
         parameters=[{
             'use_sim_time': True,
-            'speed':      0.25,
+            'speed':      1.0,
             'k':          1.0,
             'max_steer':  0.52,
             'timeout':    0.5,
