@@ -1,24 +1,18 @@
 #!/usr/bin/env python3
 """
-estimator.py — Khối Toán Học Đa Thức & Bộ Nhớ Làn Đường.
+estimator.py — Khớp Đa Thức + Kalman Filter trên Hệ Số Làn Đường.
 
-Nhận tập hợp điểm tọa độ mét từ tâm làn đường,
-khớp đường cong đa thức bậc 2 và tính toán hai sai số điều khiển:
-  e_y   — sai số lệch ngang tại điểm nhìn trước (lateral cross-track error)
-  e_psi — sai số góc hướng tại mũi xe           (heading error)
+Cải tiến so với phiên bản cũ:
+  - Weighted polyfit: điểm từ cửa sổ có độ tin cậy cao được ưu tiên hơn.
+  - LaneKalman: Kalman filter 3D trên hệ số đa thức [A, B, C] thay vì
+    inertia cache cứng nhắc (giữ hệ số cũ nguyên xi).
+    → e_y, e_psi mượt mà theo thời gian, không nhảy frame-to-frame.
+    → Trong frame mất dấu làn: Kalman tự dự đoán (predict-only), hội tụ
+      lại tự nhiên khi detection phục hồi.
 
-KHÔNG phụ thuộc bất kỳ thư viện ROS 2 nào.
-
-Mô hình đa thức (dạng tổng quát hỗ trợ cả đường thẳng lẫn đường cong):
-──────────────────────────────────────────────────────────────────────────
-  Biểu diễn trong hệ xe:  Y = A·X² + B·X + C
-
-  Trong đó:
-    X — khoảng cách tiến về phía trước từ tâm xe (m), dương = phía trước
-    Y — độ lệch ngang so với tâm làn               (m), dương = lệch trái
-
-  Tại điểm nhìn trước Ld:   e_y  = A·Ld² + B·Ld + C
-  Tiếp tuyến tại mũi xe X=0: dY/dX|₀ = B → e_psi = arctan(B)
+Mô hình đa thức: Y = A·X² + B·X + C  (hệ xe ROS, X = tiến, Y = trái)
+  e_y   = A·Ld² + B·Ld + C   (tại điểm nhìn trước Ld)
+  e_psi = arctan(B)            (góc tiếp tuyến tại X=0)
 """
 
 import math
@@ -26,23 +20,89 @@ from typing import List, Optional, Tuple
 
 import numpy as np
 
-# ── Hằng số bộ ước lượng ─────────────────────────────────────────────────────
-_LOOKAHEAD_M     = 1.0    # m — khoảng cách nhìn trước Ld để tính e_y
-_MIN_PTS         = 8      # số điểm mét tối thiểu để fit đa thức hợp lệ
-_MAX_LOSS_FRAMES = 10     # số khung hình mất dấu tối đa trước khi báo dừng
+_LOOKAHEAD_M     = 1.0    # m — khoảng cách nhìn trước để tính e_y
+_MIN_PTS         = 4      # số điểm tối thiểu (4 > 3 hệ số → vẫn overdetermined)
+_MAX_LOSS_FRAMES = 25     # frame mất dấu tối đa trước khi báo invalid (~2.5s @ 10Hz)
 
+
+# ── Kalman Filter trên hệ số đa thức [A, B, C] ───────────────────────────────
+
+class LaneKalman:
+    """
+    Bộ lọc Kalman 3D với mô hình trạng thái hằng số (constant model).
+
+    State  x = [A, B, C]^T   — hệ số đa thức bậc 2
+    Model  F = I              — đường cong thay đổi liên tục nên mô hình "giữ nguyên"
+    Obs    H = I              — đo trực tiếp hệ số từ polyfit
+
+    Phương trình:
+      Predict:  x_k|k-1 = x_{k-1}         (hằng số)
+                P_k|k-1 = P_{k-1} + Q     (độ bất định tăng mỗi bước)
+
+      Update:   K = P · (P + R)⁻¹
+                x = x + K · (z − x)
+                P = (I − K) · P
+
+    Q (process noise): tốc độ thay đổi của hệ số theo thời gian (~10 Hz):
+      A (độ cong đường): rất ổn định → Q_A nhỏ
+      B (góc hướng):     thay đổi ở góc cua → Q_B vừa
+      C (lệch ngang):    thay đổi khi xe trôi → Q_C vừa
+
+    R (measurement noise): tỉ lệ nghịch với chất lượng detection
+      r_scale = 1 (detection tốt) → R nhỏ → tin measurement nhiều
+      r_scale lớn (ít điểm / fit xấu) → R lớn → tin prediction nhiều
+    """
+
+    # Noise calibration: A (curvature), B (heading), C (lateral offset)
+    _Q = np.diag([5e-7, 2e-3, 1e-3])          # Q_C tăng 4e-4→1e-3: thích nghi nhanh hơn
+    _R_base = np.diag([2e-5, 8e-4, 2e-4])     # measurement noise (perfect detection)
+
+    def __init__(self):
+        self._x: Optional[np.ndarray] = None   # state [A, B, C]
+        self._P: Optional[np.ndarray] = None   # covariance (3×3)
+
+    @property
+    def ready(self) -> bool:
+        return self._x is not None
+
+    def predict(self):
+        """Bước predict: độ bất định P tăng thêm Q mỗi frame."""
+        if self.ready:
+            self._P = self._P + self._Q
+
+    def update(self, z: np.ndarray, r_scale: float = 1.0):
+        """
+        Bước update với đo lường z = [A_meas, B_meas, C_meas].
+
+        r_scale: hệ số nhân cho R — lớn = ít tin measurement, nhiều tin prediction.
+        """
+        R = self._R_base * max(0.5, r_scale)
+        if not self.ready:
+            self._x = z.copy()
+            self._P = R.copy()
+            return
+        S = self._P + R
+        K = self._P @ np.linalg.inv(S)     # Kalman gain (H=I)
+        self._x = self._x + K @ (z - self._x)
+        self._P = (np.eye(3) - K) @ self._P
+
+    @property
+    def state(self) -> Optional[np.ndarray]:
+        return self._x.copy() if self.ready else None
+
+    def reset(self):
+        self._x = None
+        self._P = None
+
+
+# ── Bộ Ước Lượng Chính ───────────────────────────────────────────────────────
 
 class LaneEstimator:
     """
-    Ước lượng vị trí làn đường bằng khớp đa thức bậc 2 (poly-fit).
-
-    Đặc điểm nổi bật:
-    ─────────────────
-    - Bộ nhớ đệm quán tính (inertia cache): Khi AI mất dấu làn đường
-      (< _MIN_PTS điểm hợp lệ), xe vẫn chạy tiếp bằng hệ số đa thức
-      của khung hình hợp lệ cuối cùng.
-    - Tự động phát tín hiệu mất làn sau _MAX_LOSS_FRAMES khung hình liên tiếp.
-    - Reset bộ nhớ khi nhận được điểm hợp lệ trở lại.
+    Ước lượng vị trí làn đường:
+      1. Weighted polyfit bậc 2 từ điểm tâm làn (có trọng số confidence).
+      2. Kalman filter làm mịn hệ số [A, B, C] theo thời gian.
+      3. Tính e_y, e_psi từ hệ số Kalman đã lọc.
     """
 
     def __init__(
@@ -51,154 +111,131 @@ class LaneEstimator:
         min_pts:         int   = _MIN_PTS,
         max_loss_frames: int   = _MAX_LOSS_FRAMES,
     ):
-        """
-        Parameters
-        ----------
-        lookahead_m     : Khoảng cách nhìn trước Ld để đánh giá e_y (m).
-        min_pts         : Số điểm tối thiểu để chấp nhận kết quả fit.
-        max_loss_frames : Số khung hình mất dấu tối đa trước khi báo không hợp lệ.
-        """
-        self._ld             = lookahead_m
-        self._min_pts        = min_pts
+        self._ld              = lookahead_m
+        self._min_pts         = min_pts
         self._max_loss_frames = max_loss_frames
+        self._kf              = LaneKalman()
+        self._loss_frames: int = 0
 
-        # Bộ nhớ đệm quán tính: hệ số đa thức [A, B, C] của lần fit thành công gần nhất
-        self._cached_coeffs: Optional[np.ndarray] = None  # None = chưa có dữ liệu
-        self._loss_frames: int = 0                         # đếm số khung hình mất dấu
-
-    # ──────────────────────────────────────────────────────────────────────────
-    # Nội bộ: khớp đa thức bậc 2 từ danh sách điểm mét
-    # ──────────────────────────────────────────────────────────────────────────
+    # ── Weighted poly-fit với sigma clipping ─────────────────────────────────
     def _polyfit(
-        self, pts: List[Tuple[float, float]]
-    ) -> Optional[np.ndarray]:
+        self,
+        pts:     List[Tuple[float, float]],
+        weights: Optional[List[float]] = None,
+    ) -> Tuple[Optional[np.ndarray], float, int]:
         """
-        Khớp đa thức bậc 2 với sigma clipping để loại outlier.
+        Khớp đa thức bậc 2 có trọng số.
 
-        Thuật toán:
-          1. Fit lần đầu trên toàn bộ điểm.
-          2. Tính residual; loại bỏ điểm nằm ngoài 2σ.
-          3. Fit lại trên tập điểm đã lọc (nếu còn đủ điểm).
-
-        Returns np.ndarray([A, B, C]) hoặc None.
+        Returns: (coeffs, residual_sigma, n_inliers)
+          residual_sigma: độ lệch chuẩn của residual sau sigma-clipping (mét)
+          n_inliers: số điểm sau khi loại outlier
         """
         arr = np.array(pts, dtype=np.float64)
         Xv  = arr[:, 0]
         Yv  = arr[:, 1]
+        w   = (np.ones(len(pts), dtype=np.float64)
+               if weights is None
+               else np.asarray(weights, dtype=np.float64))
+        w   = np.clip(w, 1e-6, None)    # tránh weight = 0
 
         try:
-            coeffs = np.polyfit(Xv, Yv, deg=2)
+            coeffs = np.polyfit(Xv, Yv, deg=2, w=w)
         except (np.linalg.LinAlgError, ValueError):
-            return None
+            return None, 1.0, 0
 
-        # Sigma clipping — loại outlier có residual > 2σ
+        # Sigma clipping: loại outlier > 2σ (dùng residual không trọng số)
         Y_pred   = np.polyval(coeffs, Xv)
         residual = np.abs(Yv - Y_pred)
-        sigma    = residual.std()
+        sigma    = float(residual.std())
+
         if sigma > 1e-6:
             inliers = residual < 2.0 * sigma
-            if inliers.sum() >= self._min_pts:
+            n_in    = int(inliers.sum())
+            if n_in >= self._min_pts:
                 try:
-                    coeffs = np.polyfit(Xv[inliers], Yv[inliers], deg=2)
+                    coeffs = np.polyfit(Xv[inliers], Yv[inliers], deg=2, w=w[inliers])
+                    Y2     = np.polyval(coeffs, Xv[inliers])
+                    sigma  = float(np.abs(Yv[inliers] - Y2).std())
                 except (np.linalg.LinAlgError, ValueError):
-                    pass   # giữ nguyên fit lần đầu nếu re-fit thất bại
+                    pass
+                return coeffs, sigma, n_in
 
-        return coeffs
+        return coeffs, sigma, len(pts)
 
-    # ──────────────────────────────────────────────────────────────────────────
-    # Nội bộ: tính sai số từ hệ số đa thức đã khớp
-    # ──────────────────────────────────────────────────────────────────────────
-    def _compute_errors(
-        self, coeffs: np.ndarray
-    ) -> Tuple[float, float]:
-        """
-        Tính toán cặp sai số điều khiển từ hệ số đa thức [A, B, C].
-
-        Mô hình đa thức: Y = A·X² + B·X + C
-
-        Sai số lệch ngang e_y tại điểm nhìn trước Ld:
-        ─────────────────────────────────────────────
-          e_y = A·Ld² + B·Ld + C
-          → Đây là khoảng cách ngang giữa tâm xe và tâm làn đường
-            tại khoảng cách nhìn trước, dùng để điều chỉnh tay lái.
-
-        Sai số góc hướng e_psi tại mũi xe (X = 0):
-        ─────────────────────────────────────────────
-          dY/dX|_{X=0} = 2·A·0 + B = B
-          → Tiếp tuyến của làn đường tại vị trí hiện tại của xe.
-          e_psi = arctan(B)
-          → Góc giữa hướng xe và hướng tiếp tuyến của làn đường.
-        """
+    # ── Tính sai số điều khiển từ hệ số đa thức ──────────────────────────────
+    def _compute_errors(self, coeffs: np.ndarray) -> Tuple[float, float]:
         A, B, C = float(coeffs[0]), float(coeffs[1]), float(coeffs[2])
-
-        # Sai số lệch ngang tại điểm nhìn trước Ld (mét)
-        e_y = A * self._ld**2 + B * self._ld + C
-
-        # Sai số góc hướng: arctan của độ dốc tiếp tuyến tại X=0 (rad)
+        e_y   = A * self._ld**2 + B * self._ld + C
         e_psi = math.atan(B)
-
         return e_y, e_psi
 
-    # ──────────────────────────────────────────────────────────────────────────
-    # API công khai: ước lượng sai số từ danh sách điểm mét
-    # ──────────────────────────────────────────────────────────────────────────
+    # ── API Công Khai ─────────────────────────────────────────────────────────
     def estimate(
-        self, pts_meters: List[Tuple[float, float]]
+        self,
+        pts_meters: List[Tuple[float, float]],
+        weights:    Optional[List[float]] = None,
     ) -> Tuple[float, float, bool]:
         """
-        Ước lượng sai số điều khiển từ tập điểm tâm làn đường (đơn vị mét).
+        Ước lượng (e_y, e_psi) với Kalman-smoothed polynomial coefficients.
 
-        Cơ chế bộ nhớ đệm quán tính (Inertia Cache):
-        ──────────────────────────────────────────────
-          - Nếu đủ điểm: fit đa thức mới, cập nhật cache, reset loss_frames.
-          - Nếu thiếu điểm (mất dấu làn):
-              * Dùng cache nếu còn hợp lệ (loss_frames ≤ max_loss_frames).
-              * Báo invalid (valid=False) và trả về (0, 0) nếu cache hết hạn.
-            → Cơ chế này chống chớp nháy do AI bỏ lỡ vài khung hình.
-
-        Parameters
-        ----------
-        pts_meters : Danh sách (X_m, Y_m) — tọa độ tâm làn đường, đơn vị mét.
-
-        Returns
-        -------
-        e_y   : float  Sai số lệch ngang tại điểm nhìn trước (m).
-        e_psi : float  Sai số góc hướng tại mũi xe (rad).
-        valid : bool   True nếu sai số từ dữ liệu hợp lệ (mới hoặc từ cache).
+        Luồng xử lý mỗi frame:
+          1. kf.predict()  — luôn gọi, tăng P thêm Q
+          2. Nếu đủ điểm:
+               - weighted_polyfit → coeffs_meas, sigma, n_inliers
+               - tính r_scale từ chất lượng fit
+               - kf.update(coeffs_meas, r_scale)
+               - reset loss_frames
+          3. Lấy hệ số smooth từ Kalman state
+          4. Tính và trả về (e_y, e_psi, valid)
         """
-        # ── Trường hợp 1: Đủ điểm để fit đa thức mới ────────────────────
-        if len(pts_meters) >= self._min_pts:
-            coeffs = self._polyfit(pts_meters)
-            if coeffs is not None:
-                # Fit thành công → cập nhật cache và reset bộ đếm mất dấu
-                self._cached_coeffs = coeffs
-                self._loss_frames   = 0
-                e_y, e_psi = self._compute_errors(coeffs)
-                return e_y, e_psi, True
+        # Bước 1: Predict mỗi frame (luôn luôn)
+        self._kf.predict()
 
-        # ── Trường hợp 2: Thiếu điểm (mất dấu làn đường) ────────────────
-        self._loss_frames += 1
+        # Bước 2: Cố gắng fit từ frame hiện tại
+        n_pts = len(pts_meters)
+        if n_pts >= self._min_pts:
+            coeffs_meas, sigma, n_inliers = self._polyfit(pts_meters, weights)
+            if coeffs_meas is not None:
+                # r_scale tỉ lệ nghịch chất lượng fit:
+                #   fresh_ratio: tỉ lệ điểm còn lại sau sigma clip
+                #   sigma_penalty: mức độ scatter của fit
+                fresh_ratio   = n_inliers / max(1, n_pts)
+                sigma_penalty = max(1.0, sigma / 0.008)  # chuẩn = 8mm
+                r_scale       = sigma_penalty / max(0.1, fresh_ratio)
+                self._kf.update(coeffs_meas, r_scale)
+                self._loss_frames = 0
 
-        if self._cached_coeffs is not None and self._loss_frames <= self._max_loss_frames:
-            # Dùng hệ số đa thức từ khung hình hợp lệ cuối cùng (quán tính)
-            e_y, e_psi = self._compute_errors(self._cached_coeffs)
+        else:
+            self._loss_frames += 1
+
+        # Bước 3: Lấy hệ số từ Kalman (smooth)
+        smooth = self._kf.state
+        # Sanity check: nếu C (lệch ngang) vô lý (>0.8m), reset Kalman
+        # Tránh "lock-on" vào trạng thái sai khi detection ban đầu bị lỗi
+        if smooth is not None and abs(smooth[2]) > 0.8:
+            self._kf.reset()
+            self._loss_frames = 0
+            smooth = None
+        if smooth is not None and self._loss_frames <= self._max_loss_frames:
+            e_y, e_psi = self._compute_errors(smooth)
             return e_y, e_psi, True
 
-        # ── Trường hợp 3: Cache đã hết hạn hoặc chưa có dữ liệu ──────────
-        # Báo mất làn và trả về sai số bằng 0 để node ROS xử lý dừng khẩn cấp
+        # Kalman chưa sẵn sàng hoặc mất dấu quá lâu
         return 0.0, 0.0, False
 
     def reset(self):
-        """Xoá toàn bộ bộ nhớ cache — dùng khi khởi động lại hoặc chuyển địa hình."""
-        self._cached_coeffs = None
-        self._loss_frames   = 0
+        self._kf.reset()
+        self._loss_frames = 0
+
+    @property
+    def cached_coeffs(self) -> Optional[np.ndarray]:
+        """Hệ số đa thức hiện tại (đã qua Kalman), dùng để vẽ debug."""
+        return self._kf.state
 
     @property
     def loss_frames(self) -> int:
-        """Số khung hình mất dấu liên tiếp tính đến hiện tại."""
         return self._loss_frames
 
     @property
     def has_cache(self) -> bool:
-        """True nếu bộ nhớ cache đang chứa hệ số đa thức hợp lệ."""
-        return self._cached_coeffs is not None
+        return self._kf.ready

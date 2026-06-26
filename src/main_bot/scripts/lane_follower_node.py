@@ -134,17 +134,18 @@ class LaneFollowerNode(Node):
             return
 
         # ── Lane processing ───────────────────────────────────────────────
-        # process_frame trả về (e_y, e_psi, mask, debug_img)
-        # valid được xử lý nội bộ bởi LaneEstimator (inertia cache)
-        e_y, e_psi, _, debug_frame = self._proc.process_frame(frame_bgr)
+        # process_frame trả về (e_y, e_psi, kappa, valid, mask, debug_img)
+        e_y, e_psi, kappa, valid, _, debug_frame = self._proc.process_frame(frame_bgr)
 
         now = self.get_clock().now().to_msg()
 
-        # ── Publish /status_err ───────────────────────────────────────────
-        err_msg   = Vector3()
-        err_msg.x = float(e_y)    # cross-track error [m]
-        err_msg.y = float(e_psi)  # heading error     [rad]
-        self._pub_err.publish(err_msg)
+        # ── Publish /status_err CHỈ khi valid=True ────────────────────────
+        if valid:
+            err_msg   = Vector3()
+            err_msg.x = float(e_y)    # cross-track error [m]
+            err_msg.y = float(e_psi)  # heading error     [rad]
+            err_msg.z = float(kappa)  # road curvature    [1/m]
+            self._pub_err.publish(err_msg)
 
         # ── Publish /processed_image ──────────────────────────────────────
         img_msg = bgr_to_imgmsg(debug_frame, now, 'camera_link_optical')
@@ -153,12 +154,14 @@ class LaneFollowerNode(Node):
         # ── Throttled log (every 30 frames ≈ 3 s at 10 Hz) ──────────────
         self._frame_count += 1
         if self._frame_count % 30 == 0:
-            if abs(e_y) > 1e-6 or abs(e_psi) > 1e-6:
+            if valid and (abs(e_y) > 1e-6 or abs(e_psi) > 1e-6):
+                r_str = f'R={1/kappa:.1f}m' if abs(kappa) > 0.05 else 'straight'
                 self.get_logger().info(
                     f'e_y={e_y:+.4f}m  e_psi={math.degrees(e_psi):+.2f}deg'
+                    f'  kappa={kappa:+.3f} ({r_str})'
                 )
-            else:
-                self.get_logger().info('No lane detected')
+            elif not valid:
+                self.get_logger().warning('Lane LOST — waiting for re-detection')
 
 
 # ──────────────────────────────────────────────────────────────────────────────
