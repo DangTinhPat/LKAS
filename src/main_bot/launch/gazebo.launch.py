@@ -161,7 +161,7 @@ def generate_launch_description():
             'adjacent_clear_min':  0.30,
             'npc_speed':           0.25,
             'gap_time_threshold':  8.0,
-            'prepare_hold_time':   1.0,
+            'prepare_hold_time':   0.5,
             'overtake_hold_time':  6.0,    # cần đủ thời gian để robot ổn định heading trong làn ngoài
             'return_tol':          0.04,
             'return_hold_time':    3.0,    # tăng lên 3s: camera cần thời gian tái bắt làn gốc sau RETURN
@@ -171,7 +171,7 @@ def generate_launch_description():
             'abort_front_dist':    0.10,
             'imu_ay_limit':        5.0,
             'same_lane_half_width': 0.15,
-            'normal_speed':        1.0,
+            'normal_speed':        0.9,
             'follow_speed':        0.25,   # = npc_speed → equilibrium ổn định, không oscillate
             'creep_speed':         0.15,
         }],
