@@ -134,6 +134,11 @@ def generate_launch_description():
             'k':          1.0,
             'max_steer':  0.52,
             'timeout':    0.5,
+            # kappa_blend=0.85: odom 85% + camera 15%
+            # Camera cho kappa âm (phải) khi robot ở làn ngoài trên đường cong trái
+            # → kappa_use sai dấu → feed-forward lái ngược chiều.
+            # 0.85 odom đảm bảo kappa_use đúng dấu ngay cả khi camera sai hoàn toàn.
+            'kappa_blend': 0.85,
         }],
         output='screen',
     )
@@ -150,25 +155,25 @@ def generate_launch_description():
         name='overtake_node',
         parameters=[{
             'use_sim_time':        True,
-            'front_detect_range':  0.1,   # khoảng cách bắt đầu giảm tốc khi thấy NPC
+            'front_detect_range':  1.0,    # khoảng cách phát hiện NPC (m); BUG FIX: was 0.1 → front_ok impossible
             'front_safe_min':      0.35,
-            'front_sector_deg':   30.0,
-            'adjacent_clear_min':  0.30,   # outer lane NPC edge thực tế cách ~0.44m, margin rộng hơn
+            'front_sector_deg':   23.0,    # arc tại 1m = 2×23°×π/180×1.0 = 0.80m ≈ 1.5× lane_width(0.534m)
+            'adjacent_clear_min':  0.30,
             'npc_speed':           0.25,
-            'gap_time_threshold':  8.0,   # luôn trigger khi NPC trong tầm (cũ: 4.0)
+            'gap_time_threshold':  8.0,
             'prepare_hold_time':   1.0,
-            'overtake_hold_time':  6.0,
+            'overtake_hold_time':  6.0,    # cần đủ thời gian để robot ổn định heading trong làn ngoài
             'return_tol':          0.04,
+            'return_hold_time':    3.0,    # tăng lên 3s: camera cần thời gian tái bắt làn gốc sau RETURN
             'overtake_offset':    -0.534,
-            'offset_rate_limit':   0.25,
-            'abort_front_dist':       0.10,   # chỉ abort khi sắp va chạm thật sự
-            'imu_ay_limit':           5.0,   # curve(0.44) + lane-change steer(2.73) = 3.17 m/s²
-            # Same-lane filter: track_width/2 + margin = 0.108 + 0.04 = 0.15m
-            # Loại bỏ NPC làn kế (cách 0.534m) khỏi speed control
-            'same_lane_half_width':   0.15,
-            'normal_speed':        1.0,    # m/s — tốc độ bình thường
-            'follow_speed':        0.40,   # m/s — bám sau NPC (0.35–5m)
-            'creep_speed':         0.15,   # m/s — tách ra khi quá gần (<0.35m)
+            'offset_rate_limit':   0.45,   # tốc độ đổi làn sang ngoài (m/s)
+            'return_rate_limit':   0.30,   # tốc độ hồi về (m/s); giảm từ 0.60 → robot không bị tông tường
+            'abort_front_dist':    0.10,
+            'imu_ay_limit':        5.0,
+            'same_lane_half_width': 0.15,
+            'normal_speed':        1.0,
+            'follow_speed':        0.25,   # = npc_speed → equilibrium ổn định, không oscillate
+            'creep_speed':         0.15,
         }],
         output='screen',
     )

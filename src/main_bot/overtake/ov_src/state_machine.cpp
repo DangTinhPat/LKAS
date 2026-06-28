@@ -54,8 +54,10 @@ bool StateMachine::update(bool can_overtake, bool can_prepare_hold, bool abort,
             break;
 
         case OvertakeState::RETURN:
-            // Offset đã hội tụ về 0 → về FOLLOW
-            if (std::abs(cur_offset) < cfg.return_tol)
+            // Chờ đủ return_hold_time để robot thực sự hoàn thành di chuyển vật lý,
+            // sau đó kiểm tra planner offset về gần 0.
+            // Không chỉ dựa vào planner vì robot thực tế lag sau lệnh ~0.5–1s.
+            if (t >= cfg.return_hold_time && std::abs(cur_offset) < cfg.return_tol)
                 transition_to(OvertakeState::FOLLOW, now);
             break;
     }

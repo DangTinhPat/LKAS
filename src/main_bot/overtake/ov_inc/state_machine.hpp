@@ -8,8 +8,9 @@ class StateMachine
 public:
     struct Config {
         double prepare_hold_time{1.0};
-        double overtake_hold_time{6.0};
+        double overtake_hold_time{4.0};
         double return_tol{0.04};
+        double return_hold_time{2.0};  // thời gian tối thiểu ở RETURN trước khi sang FOLLOW
     };
 
     // Cập nhật state machine; trả true nếu state vừa thay đổi.

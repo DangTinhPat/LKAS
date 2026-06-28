@@ -7,6 +7,7 @@
 #include "geometry_msgs/msg/vector3.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 #include "std_msgs/msg/float64.hpp"
+#include "std_msgs/msg/string.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 using namespace std::chrono_literals;
@@ -103,6 +104,11 @@ public:
           if (msg->data > 0.0) speed_ = msg->data;
       });
 
+    // Overtake state: dùng để phát hiện chuyển tham chiếu camera khi đổi làn
+    sub_state_ = this->create_subscription<std_msgs::msg::String>(
+      "/overtake/state", 10,
+      [this](std_msgs::msg::String::SharedPtr msg) { overtake_state_ = msg->data; });
+
     pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
 
     timer_ = this->create_wall_timer(
@@ -171,11 +177,36 @@ private:
     auto deadband = [](double x, double db) {
       return std::abs(x) < db ? 0.0 : x;
     };
-    // Áp target_offset từ overtake planner trước khi tính dead-band
-    // effective_e_y = e_y - target_offset:
-    //   target_offset = -0.534 → effective = e_y + 0.534 → lái sang làn ngoài
-    //   target_offset = 0.0   → bám lane gốc bình thường
-    double e_y_in   = deadband(e_y_ - target_offset_, db_ey_);
+
+    // ── Camera reference tracking trong quá trình đổi làn ────────────────────
+    // VẤN ĐỀ: e_y_ được đo từ TÂM LÀN mà camera đang theo dõi.
+    //   Ở inner lane: camera thấy center divider (trái) + outer edge (phải) → e_y_ đo từ inner lane center
+    //   Sau khi robot sang outer lane: camera thấy outer wall + center divider → e_y_ đo từ OUTER lane center → e_y_ → 0
+    //   Khi target_offset = -0.534 mà e_y_ = 0: e_y_in = 0+0.534 = +0.534 → tiếp tục lái TRÁI → ra khỏi map!
+    //
+    // FIX: Khi phát hiện camera chuyển tham chiếu (e_y_ nhảy về ~0 trong OVERTAKE),
+    //   lưu camera_ref_offset = target_offset tại thời điểm đó.
+    //   corrected_e_y = e_y_ + camera_ref_offset → trừ đi lượng dịch tham chiếu.
+    //   e_y_in = corrected_e_y - target_offset → kết quả đúng trong cả inner & outer lane.
+    bool in_overtake = (overtake_state_ == "OVERTAKE");
+    bool in_return   = (overtake_state_ == "RETURN");
+
+    if (in_overtake) {
+        // Phát hiện camera chuyển sang outer lane: e_y_ từ ≈-0.534 → ≈0
+        // Guard: chỉ trigger khi planner đã dịch > 0.3m (tránh nhầm ở đầu OVERTAKE)
+        if (!cam_ref_applied_ && std::abs(e_y_) < 0.15 && std::abs(target_offset_) > 0.30) {
+            cam_ref_offset_  = target_offset_;   // ghi lại lượng dịch tham chiếu
+            cam_ref_applied_ = true;
+        }
+    } else if (!in_return) {
+        // FOLLOW / PREPARE: reset về tham chiếu inner lane
+        cam_ref_offset_  = 0.0;
+        cam_ref_applied_ = false;
+    }
+    // RETURN: giữ nguyên cam_ref_offset_ đã ghi từ OVERTAKE (camera vẫn ở outer lane)
+
+    double corrected_e_y = e_y_ + cam_ref_offset_;
+    double e_y_in   = deadband(corrected_e_y - target_offset_, db_ey_);
     double e_psi_in = deadband(e_psi_, db_psi_);
 
     // ── Tổng hợp κ: blend κ_odom (EKF, smooth) + κ_vision (predictive) ──────
@@ -239,13 +270,17 @@ private:
   double       angular_z_smooth_{0.0};
   rclcpp::Time last_err_time_;
   bool         has_received_{false};
-  double       target_offset_{0.0};  // từ overtake_node, default 0 (không dịch)
+  double       target_offset_{0.0};   // từ overtake_node, default 0 (không dịch)
+  std::string  overtake_state_{"FOLLOW"};  // trạng thái overtake pipeline
+  double       cam_ref_offset_{0.0};  // lượng dịch tham chiếu camera khi đổi làn
+  bool         cam_ref_applied_{false};
 
   // ── ROS interfaces ───────────────────────────────────────────────────────
   rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr   sub_;
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr       sub_odom_;
   rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr        sub_offset_;
   rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr        sub_speed_;
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr         sub_state_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr        pub_;
   rclcpp::TimerBase::SharedPtr                                    timer_;
 };

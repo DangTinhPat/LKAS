@@ -46,11 +46,13 @@ public:
         this->declare_parameter("same_lane_half_width",  0.15);
         // StateMachine params
         this->declare_parameter("prepare_hold_time",   1.0);
-        this->declare_parameter("overtake_hold_time",  6.0);
+        this->declare_parameter("overtake_hold_time",  4.0);
         this->declare_parameter("return_tol",          0.04);
+        this->declare_parameter("return_hold_time",    2.0);
         // OffsetPlanner params
         this->declare_parameter("overtake_offset",    -0.534);
-        this->declare_parameter("offset_rate_limit",   0.25);
+        this->declare_parameter("offset_rate_limit",   0.45);
+        this->declare_parameter("return_rate_limit",   0.60);
         // Speed control params
         this->declare_parameter("normal_speed",  1.0);   // m/s — tốc độ bình thường
         this->declare_parameter("follow_speed",  0.30);  // m/s — bám sau NPC (0.35–5m)
@@ -124,10 +126,12 @@ private:
             this->get_parameter("prepare_hold_time").as_double(),
             this->get_parameter("overtake_hold_time").as_double(),
             this->get_parameter("return_tol").as_double(),
+            this->get_parameter("return_hold_time").as_double(),
         };
         OffsetPlanner::Config pcfg{
             this->get_parameter("overtake_offset").as_double(),
             this->get_parameter("offset_rate_limit").as_double(),
+            this->get_parameter("return_rate_limit").as_double(),
         };
 
         // Cảnh báo nếu chưa nhận được dữ liệu sensor
@@ -158,11 +162,11 @@ private:
         bool can_overtake = fused_front && fused_adj;
 
         // can_prepare_hold: GIỮ trạng thái PREPARE — chỉ cần adj trống
-        // KHÔNG yêu cầu front_present vì:
-        //   Trong 1s PREPARE, robot 0.30 m/s > NPC 0.25 m/s → gap đóng 0.05m
-        //   → front_dist dễ xuống dưới front_safe_min → front_present=FALSE → PREPARE hủy
-        // Giải pháp: đã commit PREPARE rồi thì chỉ hủy khi làn ngoài thực sự bị chặn
-        bool can_prepare_hold = fused_adj;
+        // Debounce: yêu cầu 3 ticks liên tiếp adj_clear=false (~300ms) mới huỷ PREPARE.
+        // Lý do: adj_clear nhiễu 1 tick → PREPARE bị huỷ ngay → FOLLOW→PREPARE oscillation.
+        if (!fused_adj) adj_fail_count_++;
+        else            adj_fail_count_ = 0;
+        bool can_prepare_hold = (adj_fail_count_ < 3);
 
         // Layer 6-7: Abort check
         bool in_overtake = (sm_.state() == OvertakeState::OVERTAKE);
@@ -224,18 +228,24 @@ private:
 
         if (cur_state == OvertakeState::OVERTAKE) {
             if (lateral_done < 0.7) {
-                // Phase 1: đang dịch ngang — giữ tốc độ follow (không lao vào NPC)
-                target_speed = follow_speed;
+                // Phase 1: đang dịch ngang — khớp tốc độ NPC để gap không đóng thêm
+                // follow_speed (0.25) > npc_speed trước đây → robot áp sát NPC trong lúc dịch
+                target_speed = npc_speed;
             } else {
                 // Phase 2: đã sang làn ngoài — tăng tốc vượt qua NPC
                 target_speed = normal_speed;
             }
         } else if (cur_state == OvertakeState::PREPARE) {
-            // Trong PREPARE: khớp đúng tốc độ NPC → gap không đóng → front_present ổn định
-            // Nếu gap < front_safe_min: creep để gap mở trước khi OVERTAKE bắt đầu
-            target_speed = (sl_dist < scfg.front_safe_min) ? creep_speed : npc_speed;
+            // Trong PREPARE: khớp đúng tốc độ NPC → gap ổn định
+            // Chỉ creep khi gap rất gần (< 70% front_safe_min = 0.25m) — tránh oscillate
+            // Nếu dùng front_safe_min (0.35m) làm ngưỡng: sl_dist noise quanh 0.35m → speed
+            // nhảy giữa creep và npc_speed liên tục → robot giật
+            target_speed = (sl_dist < scfg.front_safe_min * 0.7) ? creep_speed : npc_speed;
         } else if (cur_state == OvertakeState::RETURN) {
-            target_speed = normal_speed;
+            // Dùng follow_speed thay vì normal_speed:
+            //   Ở 1.0 m/s + return_rate_limit nhanh → robot tông vào vách làn trong.
+            //   Ở 0.40 m/s: lực tác động nhỏ hơn, camera có thêm thời gian tái bắt làn.
+            target_speed = follow_speed;
         } else if (sl_dist < scfg.front_safe_min) {
             // Quá gần (cùng làn): creep chậm hơn NPC → gap tự mở
             target_speed = creep_speed;
@@ -295,6 +305,7 @@ private:
     bool         odom_received_{false};
     rclcpp::Time last_time_;
     int          debug_tick_{0};
+    int          adj_fail_count_{0};   // debounce: ticks liên tiếp adj_clear=false
 
     // Vision fusion state
     float        vision_front_dist_{-1.0f};  // -1 = camera không thấy NPC
