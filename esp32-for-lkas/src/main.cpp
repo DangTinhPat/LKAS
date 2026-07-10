@@ -79,7 +79,7 @@ bool create_entities() {
   RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
   RCCHECK(rclc_executor_add_timer(&executor, &timer));
 
-  static char message_data[] = "tran_phuong_anh";
+  static char message_data[] = "henlo dvt";
   msg.data.data = message_data;
   msg.data.size = strlen(message_data);
   msg.data.capacity = sizeof(message_data);
