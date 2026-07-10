@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ─── Camera dimensions ─── -->
+  <xacro:property name="cam_size_x"  value="0.020"/>  <!-- depth (X, viewing axis) -->
+  <xacro:property name="cam_size_y"  value="0.030"/>  <!-- width -->
+  <xacro:property name="cam_size_z"  value="0.025"/>  <!-- height -->
+  <xacro:property name="cam_mass"    value="0.050"/>
+
+  <!-- Relative to base_link: front face of the chassis (X), centered (Y),
+       5cm above the chassis top face (Z). chassis_length/height come from
+       robot_core.xacro. -->
+  <xacro:property name="cam_x" value="${chassis_length / 2}"/>
+  <xacro:property name="cam_y" value="0"/>
+  <xacro:property name="cam_z" value="${chassis_height / 2 + 0.05}"/>
+
+  <!-- ─── camera_link ─── -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="${cam_size_x} ${cam_size_y} ${cam_size_z}"/>
+      </geometry>
+      <material name="dark_grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${cam_size_x} ${cam_size_y} ${cam_size_z}"/>
+      </geometry>
+    </collision>
+    <xacro:inertial_box mass="${cam_mass}"
+                        x="${cam_size_x}" y="${cam_size_y}" z="${cam_size_z}">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:inertial_box>
+  </link>
+
+  <!-- base_link → camera_link -->
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="camera_link"/>
+    <origin xyz="${cam_x} ${cam_y} ${cam_z}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Optical frame: rotates from the robot frame (X=forward, Y=left, Z=up)
+       to the standard ROS optical frame (Z=forward, X=right, Y=down). -->
+  <link name="camera_link_optical"/>
+
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_link"/>
+    <child  link="camera_link_optical"/>
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+  </joint>
+
+  <!-- ─── Gazebo Harmonic sensor (sim only — real camera uses a driver node, see practical launch) ─── -->
+  <xacro:if value="$(arg sim_mode)">
+    <gazebo reference="camera_link">
+      <sensor name="camera" type="camera">
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <topic>/camera</topic>
+        <camera name="camera">
+          <horizontal_fov>2.094</horizontal_fov>   <!-- 120° FOV -->
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>8.0</far>
+          </clip>
+          <optical_frame_id>camera_link_optical</optical_frame_id>
+        </camera>
+      </sensor>
+    </gazebo>
+  </xacro:if>
+
+</robot>

@@ -1,0 +1,11 @@
+<library path="main_bot_hardware">
+  <class name="main_bot_hardware/RealRobotSystem"
+         type="main_bot_hardware::RealRobotSystem"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Real-robot ros2_control SystemInterface for the LKAS Ackermann robot. Bridges
+      /mcu/joint_states and /mcu/joint_commands (published/subscribed by the ESP32 over
+      micro-ROS) into ros2_control state/command interfaces.
+    </description>
+  </class>
+</library>

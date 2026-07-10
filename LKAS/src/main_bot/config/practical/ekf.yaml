@@ -1,0 +1,45 @@
+ekf_node:
+  ros__parameters:
+    use_sim_time: false
+    frequency: 50.0
+    sensor_timeout: 0.1
+    two_d_mode: true   # constrain z=0, roll=0, pitch=0 (ground robot)
+    print_diagnostics: false
+    debug: false
+
+    map_frame:       map
+    odom_frame:      odom
+    base_link_frame: base_footprint
+    world_frame:     odom
+
+    publish_tf: true
+    publish_acceleration: false
+
+    # Source 1: wheel-encoder odometry (from ackermann_steering_controller, driven by
+    # main_bot_hardware/RealRobotSystem reading /mcu/joint_states).
+    # Field order: [x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az]
+    odom0: /ackermann_steering_controller/odometry
+    odom0_config: [true,  true,  false,
+                   false, false, true,
+                   true,  false, false,
+                   false, false, true,
+                   false, false, false]
+    odom0_queue_size: 10
+    odom0_nodelay: false
+    odom0_differential: false
+    odom0_relative: false
+
+    # Source 2: IMU, published directly by the ESP32 firmware over micro-ROS (see
+    # mcu_agent/README.md for the topic contract). frame_id must be "imu_link" to match
+    # the TF published from description/imu.xacro.
+    imu0: /imu
+    imu0_config: [false, false, false,
+                  false, false, true,
+                  false, false, false,
+                  true,  true,  true,
+                  true,  false, false]
+    imu0_queue_size: 10
+    imu0_nodelay: false
+    imu0_differential: false
+    imu0_relative: false
+    imu0_remove_gravitational_acceleration: true

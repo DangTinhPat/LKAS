@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# One-time setup: vendors and builds the standard micro-ROS Agent (eProsima
+# Micro-XRCE-DDS-Agent, wrapped by micro-ROS/micro_ros_setup) into this workspace.
+#
+# This is NOT run automatically by anything else in this repo — run it yourself once,
+# interactively, before using mcu_agent_node. It clones external repos, may prompt for sudo
+# (system dependencies via rosdep), and the agent build itself can take several minutes.
+#
+# Usage: bash src/mcu_agent/scripts/setup_micro_ros_agent.sh
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WS_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"   # .../LKAS (workspace root)
+cd "$WS_ROOT"
+
+ROS_BRANCH="${ROS_DISTRO:-jazzy}"
+
+echo "[setup_micro_ros_agent] workspace     : $WS_ROOT"
+echo "[setup_micro_ros_agent] micro_ros_setup branch: $ROS_BRANCH"
+
+if [ ! -d src/micro_ros_setup ]; then
+  git clone -b "$ROS_BRANCH" https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup
+else
+  echo "[setup_micro_ros_agent] src/micro_ros_setup already present, skipping clone"
+fi
+
+sudo apt-get update
+rosdep update
+rosdep install --from-paths src --ignore-src -y
+
+colcon build --packages-select micro_ros_setup
+# shellcheck disable=SC1091
+source install/setup.bash
+
+ros2 run micro_ros_setup create_agent_ws.sh
+ros2 run micro_ros_setup build_agent.sh
+# shellcheck disable=SC1091
+source install/setup.bash
+
+echo
+echo "[setup_micro_ros_agent] done. Test the agent directly with:"
+echo "  ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM0 -b 115200"
+echo "Or let mcu_agent_node manage it: ros2 launch mcu_agent mcu_agent.launch.py"

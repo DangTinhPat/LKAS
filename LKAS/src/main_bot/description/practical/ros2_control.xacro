@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Real-robot counterpart of simulation/ros2_control.xacro: identical joint layout so
+       ackermann_steering_controller and every downstream node (lane_control_node, overtake_node)
+       run unmodified on both sim and hardware. Only the <hardware> plugin differs — RealRobotSystem
+       reads/writes /mcu/joint_states and /mcu/joint_commands (see mcu_agent/README.md for the
+       message contract the ESP32 firmware must implement), which micro-ROS bridges from the MCU. -->
+  <ros2_control name="dvt_robot_control" type="system">
+    <hardware>
+      <plugin>main_bot_hardware/RealRobotSystem</plugin>
+    </hardware>
+
+    <!-- Steering: position command. Right joint listed first, as required by ackermann_steering_controller. -->
+    <joint name="front_right_steer_joint">
+      <command_interface name="position">
+        <param name="min">-0.52</param>
+        <param name="max">0.52</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="front_left_steer_joint">
+      <command_interface name="position">
+        <param name="min">-0.52</param>
+        <param name="max">0.52</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Drive: velocity command -->
+    <joint name="rear_left_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="rear_right_wheel_joint">
+      <command_interface name="velocity">
+        <param name="min">-10</param>
+        <param name="max">10</param>
+      </command_interface>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- Front wheels: state only (passive, free-spinning, no encoder on the real robot —
+         RealRobotSystem reports 0 for these two; see its class-level comment). -->
+    <joint name="front_left_wheel_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="front_right_wheel_joint">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+</robot>
