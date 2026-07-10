@@ -74,7 +74,9 @@ Ba mảnh ghép **bắt buộc phải đúng cùng lúc** thì dữ liệu mới
 fullstack-LKAS/
 ├── esp32-for-lkas/          # Firmware ESP32 — PlatformIO project
 │   ├── platformio.ini       # board=esp32-s3-devkitc1-n16r8, framework=arduino, lib micro_ros_platformio
-│   ├── src/main.cpp         # Code chạy trên chip (hiện là bản TEST kết nối, xem ghi chú bên dưới)
+│   ├── HARDWARE.md          # Sơ đồ đấu nối, quy hoạch GPIO, workflow bring-up/hiệu chuẩn
+│   ├── include/              # robot_config.hpp (pin/gain), robot_types.hpp, header từng module
+│   ├── src/                  # main.cpp (wiring) + drive_motor / steering_actuator / imu_sensor / micro_ros_bridge
 │   └── fix_matter_ccflags.py # Patch build-time bắt buộc (xem giải thích trong file)
 │
 └── LKAS/                    # Workspace ROS 2 (colcon) — xem LKAS/README.md để biết chi tiết
@@ -94,8 +96,7 @@ PlatformIO project, board **ESP32-S3-DevKitC-1 N16R8** (16MB flash / 8MB PSRAM),
 
 - **Thư viện**: [`micro_ros_platformio`](https://github.com/micro-ROS/micro_ros_platformio) — build sẵn `rcl`/`rclc`/`microcdr` thành `libmicroros`, cho phép gọi API ROS 2 chuẩn (`rcl_publish`, `rclc_executor_spin_some`...) ngay trên vi điều khiển.
 - **`fix_matter_ccflags.py`**: patch bắt buộc, không tuỳ chọn. Core Arduino-ESP32 hiện tại (đi kèm thành phần ESP-Matter) chèn một cờ biên dịch chứa `<...>` khiến CMake nội bộ của `micro_ros_platformio` sinh lỗi cú pháp shell (`Syntax error: ";" unexpected`) — không có patch này thì **firmware không build được**, không liên quan gì tới logic micro-ROS.
-- **`src/main.cpp` — trạng thái hiện tại**: đây là **firmware test kết nối**, không phải firmware sản phẩm cuối. Nó publish 1 chuỗi String cố định lên topic `esp32_test_topic` mỗi giây, dùng để xác nhận đường truyền serial ↔ agent hoạt động đúng, theo state machine chuẩn micro-ROS (tự chờ agent, tự kết nối lại khi rớt — xem chi tiết trong code).
-- **Việc còn thiếu để dùng cho robot thật**: `main.cpp` phải viết lại theo đúng **hợp đồng topic** ở [`LKAS/src/mcu_agent/README.md`](LKAS/src/mcu_agent/README.md) — publish `sensor_msgs/msg/JointState` lên `/mcu/joint_states`, `sensor_msgs/msg/Imu` lên `/imu`, và subscribe `sensor_msgs/msg/JointState` từ `/mcu/joint_commands` để nhận lệnh lái/ga từ `ros2_control`.
+- **Firmware sản phẩm, đã implement đúng hợp đồng topic** ở [`LKAS/src/mcu_agent/README.md`](LKAS/src/mcu_agent/README.md): publish `sensor_msgs/msg/JointState` lên `/mcu/joint_states` + `sensor_msgs/msg/Imu` lên `/imu`, subscribe `sensor_msgs/msg/JointState` từ `/mcu/joint_commands`. Khung gầm Ackermann: 1 servo lái (tỷ số 1:1 cho 2 bánh trước) + 2 động cơ DC có encoder (bánh sau, đóng vòng PID vận tốc) + 1 IMU MPU6050. Code tách theo module (`drive_motor`, `steering_actuator`, `imu_sensor`, `micro_ros_bridge`, `pid_controller`) — chi tiết đấu nối phần cứng + workflow hiệu chuẩn xem [`HARDWARE.md`](esp32-for-lkas/HARDWARE.md).
 
 ## Thành phần 2 — `LKAS/` (ROS 2 workspace)
 
@@ -170,8 +171,9 @@ ros2 launch main_bot robot.launch.py serial_port:=/dev/ttyACM0 baud_rate:=115200
 
 ## Trạng thái dự án
 
-- ✅ Firmware build được, patch toolchain đã áp dụng, kết nối agent ổn định, đã test thật trên board qua `/dev/ttyACM0`.
-- ⚠️ `esp32-for-lkas/src/main.cpp` hiện là **firmware test**, chưa implement hợp đồng topic thật (`/mcu/joint_states`, `/mcu/joint_commands`, `/imu`) — cần viết lại trước khi dùng cho `robot.launch.py`.
+- ✅ Firmware build được, patch toolchain đã áp dụng, kết nối agent ổn định, đã test link micro-ROS thật trên board qua `/dev/ttyACM0`.
+- ✅ Firmware đã implement đúng hợp đồng topic (`/mcu/joint_states`, `/mcu/joint_commands`, `/imu`), tách module rõ ràng — xem [`HARDWARE.md`](esp32-for-lkas/HARDWARE.md).
+- ⚠️ **Chưa test trên phần cứng thật** (servo/động cơ/encoder/IMU chưa gắn vào board lúc viết code) — pin/gain trong `robot_config.hpp` là placeholder cần đo/calibrate theo đúng robot, theo quy trình ở `HARDWARE.md`.
 - ⚠️ Driver camera/LiDAR thật trong `LKAS/src/main_bot/launch/practical/robot.launch.py` hiện là placeholder, cần điền node đúng phần cứng thật đang dùng.
 - ⚠️ Chưa khai báo giấy phép chính thức cho `main_bot` (`package.xml` còn để `TODO`).
 
