@@ -218,7 +218,7 @@ LKAS/
     │   ├── launch/mcu_agent.launch.py
     │   └── scripts/setup_micro_ros_agent.sh # build 1 lần micro-ROS Agent gốc (không tự chạy)
     │
-    └── gui/gui/sim_gui.py                   # PyQt5 control panel cho mô phỏng
+    └── gui/gui/control_gui.py                # PyQt5 control panel — sim/real x auto/manual
 ```
 
 ## Thông số robot & thế giới mô phỏng
@@ -285,8 +285,8 @@ source install/setup.bash
 # 2. Khởi chạy mô phỏng (Gazebo + tất cả node) — bằng dòng lệnh...
 ros2 launch main_bot gazebo.launch.py
 
-# ...hoặc bằng GUI (package gui):
-ros2 run gui sim_gui
+# ...hoặc bằng GUI (package gui) — chọn SIMULATION/REAL ROBOT và Autonomous/Manual trong app:
+ros2 run gui control_gui
 
 # 3. (tuỳ chọn) Mở RViz để quan sát TF / debug image
 ros2 launch main_bot display.launch.py

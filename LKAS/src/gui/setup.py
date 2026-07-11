@@ -14,7 +14,7 @@ setup(
     zip_safe=True,
     entry_points={
         'console_scripts': [
-            'sim_gui = gui.sim_gui:main',
+            'control_gui = gui.control_gui:main',
         ],
     },
 )
