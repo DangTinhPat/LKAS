@@ -42,6 +42,7 @@ private:
   std::mutex state_mutex_;
   std::map<std::string, double> latest_position_;
   std::map<std::string, double> latest_velocity_;
+  rclcpp::Time last_msg_time_;
 };
 
 }  // namespace main_bot_hardware

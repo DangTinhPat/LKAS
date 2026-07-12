@@ -27,6 +27,8 @@ hardware_interface::CallbackReturn RealRobotSystem::on_init(
   joint_commands_pub_ = node_->create_publisher<sensor_msgs::msg::JointState>(
     "/mcu/joint_commands", rclcpp::SystemDefaultsQoS());
 
+  last_msg_time_ = node_->now();
+
   if (auto executor = params.executor.lock()) {
     executor->add_node(node_);
   } else {
@@ -42,6 +44,7 @@ hardware_interface::CallbackReturn RealRobotSystem::on_init(
 void RealRobotSystem::joint_states_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
 {
   std::lock_guard<std::mutex> lock(state_mutex_);
+  last_msg_time_ = node_->now();
   for (size_t i = 0; i < msg->name.size(); ++i) {
     if (i < msg->position.size()) {
       latest_position_[msg->name[i]] = msg->position[i];
@@ -56,6 +59,19 @@ hardware_interface::return_type RealRobotSystem::read(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   std::lock_guard<std::mutex> lock(state_mutex_);
+
+  // /mcu/joint_states carries no liveness info of its own -- without this check a dropped
+  // serial link (unplugged cable, ESP32 crash, agent restart) would silently freeze on the
+  // last known position/velocity forever, with the controller none the wiser.
+  const double stale_s = (node_->now() - last_msg_time_).seconds();
+  if (stale_s > 0.5) {
+    RCLCPP_WARN_THROTTLE(
+      node_->get_logger(), *node_->get_clock(), 5000,
+      "No /mcu/joint_states received in %.2fs -- holding last known values. Check the MCU "
+      "serial link (see mcu_agent/README.md) and /mcu/agent/status.",
+      stale_s);
+  }
+
   for (const auto & joint : info_.joints) {
     const std::string pos_if = joint.name + "/" + hardware_interface::HW_IF_POSITION;
     const std::string vel_if = joint.name + "/" + hardware_interface::HW_IF_VELOCITY;

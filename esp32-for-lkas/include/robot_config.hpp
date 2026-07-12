@@ -49,8 +49,12 @@ constexpr int kImuSclPin = 9;
 constexpr float kControlLoopHz = 50.0f;
 constexpr float kControlLoopPeriodS = 1.0f / kControlLoopHz;
 
-// Order and spelling are fixed by the topic contract in LKAS/src/mcu_agent/README.md —
-// RealRobotSystem on the PC side indexes joints by this exact order.
+// Spelling must match the joint names in main_bot's ros2_control.xacro exactly — this is
+// the order /mcu/joint_states is published in. RealRobotSystem reads that message by name
+// (not index), so this array's order itself doesn't matter, only the strings' spelling do.
+// /mcu/joint_commands (the other direction) is also matched by name in
+// micro_ros_bridge.cpp's jointCommandCallback, for the same reason: the PC side does not
+// guarantee any particular array order.
 constexpr const char* kJointNames[4] = {
     "rear_left_wheel_joint",
     "rear_right_wheel_joint",

@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 
+#include <cstring>
+
 #include <micro_ros_platformio.h>
 #include <rcl/error_handling.h>
 #include <rcl/rcl.h>
@@ -62,14 +64,42 @@ void initJointStateMessage(sensor_msgs__msg__JointState& msg, double* position_s
   msg.velocity.capacity = kNumJoints;
 }
 
-// Joint order is fixed by the topic contract (LKAS/src/mcu_agent/README.md): index
-// 0/1 are the rear wheels' velocity, 2/3 are the front steer joints' position.
+// Looks joints up by name instead of trusting array index: RealRobotSystem::write()
+// (main_bot/hardware/real_robot_system.cpp) builds /mcu/joint_commands by iterating
+// info_.joints in ros2_control.xacro's declaration order and skipping joints with no
+// command interface, which is NOT [rear_left, rear_right, front_left_steer,
+// front_right_steer] -- it's whatever order the xacro happens to list joints in.
+// Matching by name keeps this correct regardless of that order.
 void jointCommandCallback(const void* msg_in) {
   const auto* msg = static_cast<const sensor_msgs__msg__JointState*>(msg_in);
-  latest_command.rear_left_velocity_rad_s = static_cast<float>(msg->velocity.data[0]);
-  latest_command.rear_right_velocity_rad_s = static_cast<float>(msg->velocity.data[1]);
-  latest_command.steer_angle_rad =
-      0.5f * static_cast<float>(msg->position.data[2] + msg->position.data[3]);
+
+  bool have_left_steer = false;
+  bool have_right_steer = false;
+  float left_steer_rad = 0.0f;
+  float right_steer_rad = 0.0f;
+
+  for (size_t i = 0; i < msg->name.size; ++i) {
+    const char* name = msg->name.data[i].data;
+    if (strcmp(name, "rear_left_wheel_joint") == 0 && i < msg->velocity.size) {
+      latest_command.rear_left_velocity_rad_s = static_cast<float>(msg->velocity.data[i]);
+    } else if (strcmp(name, "rear_right_wheel_joint") == 0 && i < msg->velocity.size) {
+      latest_command.rear_right_velocity_rad_s = static_cast<float>(msg->velocity.data[i]);
+    } else if (strcmp(name, "front_left_steer_joint") == 0 && i < msg->position.size) {
+      left_steer_rad = static_cast<float>(msg->position.data[i]);
+      have_left_steer = true;
+    } else if (strcmp(name, "front_right_steer_joint") == 0 && i < msg->position.size) {
+      right_steer_rad = static_cast<float>(msg->position.data[i]);
+      have_right_steer = true;
+    }
+  }
+
+  if (have_left_steer && have_right_steer) {
+    latest_command.steer_angle_rad = 0.5f * (left_steer_rad + right_steer_rad);
+  } else if (have_left_steer) {
+    latest_command.steer_angle_rad = left_steer_rad;
+  } else if (have_right_steer) {
+    latest_command.steer_angle_rad = right_steer_rad;
+  }
 }
 
 bool createEntities() {
