@@ -208,8 +208,8 @@ LKAS/
     │   │   ├── simulation/                  # controller_gz_sim.yaml, ekf.yaml, gz_bridge.yaml
     │   │   └── practical/                   # controller_real.yaml, ekf.yaml
     │   ├── launch/
-    │   │   ├── simulation/                  # gazebo.launch.py, display.launch.py, test_world.launch.py
-    │   │   └── practical/robot.launch.py    # bringup robot thật (+ placeholder driver camera/LiDAR)
+    │   │   ├── simulation/                  # gazebo.launch.py, manual_test_sim.launch.py, display.launch.py, test_world.launch.py
+    │   │   └── practical/                   # robot.launch.py (tự hành), manual_test_real.launch.py (joystick, không autonomous)
     │   └── models/EgoLanes_Lite_FP32.onnx   # Model segmentation làn đường
     │
     ├── mcu_agent/                           # Xem mcu_agent/README.md cho hợp đồng topic MCU
@@ -306,25 +306,35 @@ ros2 run rqt_image_view rqt_image_view   # xem /processed_image, /overtake/visio
 
 ## Chạy trên robot thật
 
+**Đã xác nhận chạy được end-to-end trên phần cứng thật**, bao gồm cả lane-keeping tự hành —
+xem [README gốc](../README.md#trạng-thái-dự-án) cho trạng thái chi tiết. Firmware ESP32 đã có sẵn
+tại [`esp32-for-lkas/`](../esp32-for-lkas/), không cần tự viết lại.
+
 ```bash
 # 1. Build 1 lần micro-ROS Agent gốc (clone + build ngoài workspace chính, xem
 #    src/mcu_agent/README.md). Có thể mất vài phút, cần mạng + có thể cần sudo.
 bash src/mcu_agent/scripts/setup_micro_ros_agent.sh
 
-# 2. Nạp firmware micro-ROS cho ESP32 (esp32-for-lkas/) — TỰ VIẾT theo đúng hợp đồng
-#    topic mô tả trong src/mcu_agent/README.md (/mcu/joint_states, /mcu/joint_commands, /imu).
+# 2. Build + nạp firmware cho ESP32 (xem README gốc, mục "Bắt đầu nhanh")
+cd ../esp32-for-lkas && pio run -t upload && cd ../LKAS
 
-# 3. Bringup robot thật
+# 3a. Bringup robot thật — tự hành, bằng dòng lệnh...
 source install/setup.bash
 ros2 launch main_bot robot.launch.py serial_port:=/dev/ttyACM0 baud_rate:=115200
+
+# 3b. ...hoặc bằng GUI: ros2 run gui control_gui, chọn REAL ROBOT.
+#     Khuyến nghị chạy submode Manual (Joystick) trước để test tay drivetrain
+#     (không tranh chấp /cmd_vel với pipeline tự lái), rồi mới chuyển Autonomous.
 ```
 
 `robot.launch.py` khởi động: `robot_state_publisher` (URDF với `sim_mode:=false`),
 `controller_manager` (nạp `main_bot_hardware/RealRobotSystem`), `ackermann_steering_controller`,
-`ekf_node`, `mcu_agent_node`, rồi đúng 4 node ứng dụng dùng chung với mô phỏng. Driver camera/LiDAR
-thật hiện là **placeholder** (comment sẵn ví dụ `v4l2_camera` / `rplidar_ros`) trong
-[`launch/practical/robot.launch.py`](src/main_bot/launch/practical/robot.launch.py) — điền node
-đúng phần cứng bạn dùng vào đó.
+`ekf_node`, `mcu_agent_node`, rồi đúng 4 node ứng dụng dùng chung với mô phỏng.
+
+> ⚠️ Node driver camera/LiDAR thật trong
+> [`launch/practical/robot.launch.py`](src/main_bot/launch/practical/robot.launch.py) hiện vẫn chỉ
+> có ví dụ dạng comment (`v4l2_camera` / `rplidar_ros`) — cần rà soát và commit chính thức node đang
+> dùng thực tế vào file này.
 
 ## Tham số có thể tinh chỉnh
 

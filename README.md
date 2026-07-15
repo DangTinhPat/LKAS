@@ -59,7 +59,7 @@ flowchart LR
     AGENT <-->|"topic ROS 2 thật:<br/>/mcu/joint_states, /mcu/joint_commands, /imu"| RHW["main_bot_hardware/RealRobotSystem<br/>(ros2_control plugin)"]
 
     RHW --> APP["main_bot: lane_control_node,<br/>overtake_node, vision pipeline..."]
-    APP -.-> GUI["gui: PyQt5 control panel<br/>(chỉ dùng cho mô phỏng)"]
+    APP -.-> GUI["gui: control_gui.py<br/>Sim/Real × Autonomous/Manual"]
 ```
 
 Ba mảnh ghép **bắt buộc phải đúng cùng lúc** thì dữ liệu mới chảy từ cảm biến trên board tới node điều khiển:
@@ -83,7 +83,7 @@ fullstack-LKAS/
     └── src/
         ├── main_bot/         # Pipeline giữ làn + vượt xe, mô tả robot, launch sim & robot thật
         ├── mcu_agent/        # Giám sát tiến trình micro_ros_agent cho robot thật
-        ├── gui/              # PyQt5 control panel (chỉ dùng cho mô phỏng Gazebo)
+        ├── gui/              # control_gui.py — 1 GUI, 4 chế độ: Sim/Real × Autonomous/Manual
         ├── micro_ros_setup/  # (gitignored) script build-time, tải về khi chạy setup 1 lần
         └── uros/             # (gitignored) source + build của micro_ros_agent thật
 ```
@@ -171,10 +171,12 @@ ros2 launch main_bot robot.launch.py serial_port:=/dev/ttyACM0 baud_rate:=115200
 
 ## Trạng thái dự án
 
-- ✅ Firmware build được, patch toolchain đã áp dụng, kết nối agent ổn định, đã test link micro-ROS thật trên board qua `/dev/ttyACM0`.
-- ✅ Firmware đã implement đúng hợp đồng topic (`/mcu/joint_states`, `/mcu/joint_commands`, `/imu`), tách module rõ ràng — xem [`HARDWARE.md`](esp32-for-lkas/HARDWARE.md).
-- ⚠️ **Chưa test trên phần cứng thật** (servo/động cơ/encoder/IMU chưa gắn vào board lúc viết code) — pin/gain trong `robot_config.hpp` là placeholder cần đo/calibrate theo đúng robot, theo quy trình ở `HARDWARE.md`.
-- ⚠️ Driver camera/LiDAR thật trong `LKAS/src/main_bot/launch/practical/robot.launch.py` hiện là placeholder, cần điền node đúng phần cứng thật đang dùng.
+- ✅ **Đã chạy thành công end-to-end trên robot thật** — không còn dừng ở mô phỏng. Toàn bộ chuỗi firmware ESP32 → `micro_ros_agent` → `mcu_agent` → `RealRobotSystem` → `ackermann_steering_controller` → pipeline thị giác/điều khiển/vượt xe đã được xác nhận hoạt động trên phần cứng vật lý, bao gồm cả lane-keeping tự hành.
+- ✅ Firmware build được, patch toolchain đã áp dụng, kết nối micro-ROS ổn định qua `/dev/ttyACM0`, tách module rõ ràng — xem [`HARDWARE.md`](esp32-for-lkas/HARDWARE.md).
+- ✅ Đã phát hiện và sửa một lỗi nghiêm trọng trong quá trình đưa lên phần cứng thật: `RealRobotSystem` publish `/mcu/joint_commands` theo thứ tự khai báo joint trong `ros2_control.xacro`, còn firmware cũ đọc theo chỉ số mảng cố định — hai bên không khớp nhau khiến lệnh lái/ga không tới nơi dù kết nối vẫn báo khoẻ mạnh. Đã sửa bằng cách tra cứu theo **tên joint** ở cả hai chiều (giống cách `/mcu/joint_states` vốn đã làm đúng), không còn phụ thuộc thứ tự mảng.
+- ✅ GUI hợp nhất (`control_gui.py`) hỗ trợ 4 chế độ Sim/Real × Autonomous/Manual — chế độ Manual (joystick) dùng để bench-test drivetrain tay trước khi chạy tự hành, không tranh chấp `/cmd_vel` với pipeline tự lái.
+- ⚠️ Pin/gain trong `robot_config.hpp` (tỷ số encoder, hệ số PID, dải góc servo) vẫn là giá trị ban đầu, chưa qua vòng hiệu chỉnh chính xác theo `HARDWARE.md` — không ảnh hưởng tới việc robot chạy được, chỉ ảnh hưởng chất lượng bám làn/đáp ứng tốc độ. Sẽ tinh chỉnh tiếp.
+- ⚠️ Node driver camera/LiDAR dùng khi test thật cần được rà soát và commit chính thức vào [`launch/practical/robot.launch.py`](LKAS/src/main_bot/launch/practical/robot.launch.py) — file này hiện vẫn chỉ có ví dụ dạng comment.
 - ⚠️ Chưa khai báo giấy phép chính thức cho `main_bot` (`package.xml` còn để `TODO`).
 
 ## Giấy phép
