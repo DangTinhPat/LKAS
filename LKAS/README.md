@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚗 LKAS — Lane Keeping & Overtake Assist System
+# LKAS — Lane Keeping & Overtake Assist System
 
 **Hệ thống giữ làn đường và vượt xe tự động cho robot Ackermann — chạy được cả mô phỏng lẫn robot thật**
 
@@ -14,6 +14,10 @@
 </div>
 
 ---
+
+## Demo
+
+[▶ Video mô phỏng — giữ làn + vượt xe trên Gazebo](../demo/demo_sim_lkas.mp4)
 
 ## Mục lục
 
@@ -36,32 +40,28 @@
 
 ## Tổng quan
 
-**LKAS** là một workspace ROS 2 mô phỏng — và điều khiển thật — một robot 4 bánh dẫn động kiểu
-Ackermann có khả năng:
+LKAS là một workspace ROS 2 mô phỏng — và điều khiển thật — một robot 4 bánh dẫn động kiểu Ackermann có khả năng:
 
-1. **Tự lái theo làn đường** bằng camera + mô hình phân đoạn làn đường chạy ONNX, dùng bộ điều khiển Stanley kết hợp feed-forward độ cong.
-2. **Tự động vượt xe (NPC)** phía trước bằng cách hợp nhất dữ liệu LiDAR 2D, IMU, odometry (qua EKF) và camera, điều phối qua một state machine 7 lớp.
+1. Tự lái theo làn đường bằng camera và mô hình phân đoạn làn đường chạy ONNX, dùng bộ điều khiển Stanley kết hợp feed-forward độ cong.
+2. Tự động vượt xe (NPC) phía trước bằng cách hợp nhất dữ liệu LiDAR 2D, IMU, odometry (qua EKF) và camera, điều phối qua một state machine 7 lớp.
 
-Cùng một bộ node điều khiển (`lane_control_node`, `overtake_node`, các node vision) chạy **không đổi**
-trên cả Gazebo Harmonic (đường đua oval 2 làn, NPC chuyển động độc lập để kiểm thử kịch bản vượt xe)
-lẫn robot Ackermann thật, giao tiếp phần cứng qua micro-ROS.
+Cùng một bộ node điều khiển (`lane_control_node`, `overtake_node`, các node vision) chạy không đổi trên cả Gazebo Harmonic (đường đua oval 2 làn, NPC chuyển động độc lập để kiểm thử kịch bản vượt xe) lẫn robot Ackermann thật, giao tiếp phần cứng qua micro-ROS.
 
 ## Tính năng chính
 
-- 🎯 **Giữ làn bằng AI**: mô hình segmentation nhẹ (`EgoLanes_Lite_FP32.onnx`) chạy qua ONNX Runtime, không phụ thuộc `cv_bridge`.
-- 📐 **Inverse Perspective Mapping (IPM) thuần hình học**: chuyển pixel ảnh sang toạ độ mét không cần bảng tra hay calibration ngoài.
-- 🧭 **Bộ lọc Kalman trên hệ số đa thức làn đường**, mượt hoá `e_y`, `e_psi` qua từng khung hình và dự đoán khi mất dấu tạm thời.
-- 🛞 **Bộ điều khiển Stanley + feed-forward** với blend độ cong từ odometry (EKF) và từ camera.
-- 🚦 **State machine vượt xe 4 trạng thái** (`FOLLOW → PREPARE → OVERTAKE → RETURN`) với logic abort an toàn (va chạm, IMU spike, xe ngược chiều).
-- 👁️ **Fusion cảm biến**: LiDAR cho khoảng cách/an toàn chính xác, camera bổ sung tầm phát hiện xa cho vật cản phía trước.
-- 🤖 **NPC có vật lý va chạm thật** (mô phỏng): dùng plugin `VelocityControl` của Gazebo thay vì chỉ dịch chuyển pose, nên robot có thể va chạm với NPC như một vật thể thật.
-- 🔌 **1 kiến trúc — 2 chế độ**: `ros2_control` trừu tượng hoá phần cứng, nên toàn bộ tầng ứng dụng không cần biết đang chạy trên Gazebo hay robot thật.
-- 🖥️ **GUI điều khiển mô phỏng** (package `gui`): launch/stop Gazebo, xem `e_y`/`e_psi` real-time, xem camera debug — không cần dòng lệnh.
+- **Giữ làn bằng AI**: mô hình segmentation nhẹ (`EgoLanes_Lite_FP32.onnx`) chạy qua ONNX Runtime, không phụ thuộc `cv_bridge`.
+- **Inverse Perspective Mapping (IPM) thuần hình học**: chuyển pixel ảnh sang toạ độ mét không cần bảng tra hay calibration ngoài.
+- **Bộ lọc Kalman trên hệ số đa thức làn đường**, mượt hoá `e_y`, `e_psi` qua từng khung hình và dự đoán khi mất dấu tạm thời.
+- **Bộ điều khiển Stanley + feed-forward** với blend độ cong từ odometry (EKF) và từ camera.
+- **State machine vượt xe 4 trạng thái** (`FOLLOW → PREPARE → OVERTAKE → RETURN`) với logic abort an toàn (va chạm, IMU spike, xe ngược chiều).
+- **Fusion cảm biến**: LiDAR cho khoảng cách/an toàn chính xác, camera bổ sung tầm phát hiện xa cho vật cản phía trước.
+- **NPC có vật lý va chạm thật** (mô phỏng): dùng plugin `VelocityControl` của Gazebo thay vì chỉ dịch chuyển pose, nên robot có thể va chạm với NPC như một vật thể thật.
+- **1 kiến trúc, 2 chế độ**: `ros2_control` trừu tượng hoá phần cứng, nên toàn bộ tầng ứng dụng không cần biết đang chạy trên Gazebo hay robot thật.
+- **GUI điều khiển hợp nhất** (package `gui`): 4 chế độ Sim/Real × Autonomous/Manual trong cùng một ứng dụng — launch/stop, joystick lái tay, biểu đồ `e_y`/`e_psi` và camera debug mở theo yêu cầu ở cửa sổ riêng.
 
 ## Mô phỏng & Robot thật — 1 codebase, 2 chế độ
 
-Mỗi thư mục cấu hình của `main_bot` (`launch/`, `config/`, và khối `ros2_control` trong
-`description/`) có 2 biến thể song song:
+Mỗi thư mục cấu hình của `main_bot` (`launch/`, `config/`, và khối `ros2_control` trong `description/`) có 2 biến thể song song:
 
 | | `simulation/` | `practical/` |
 |---|---|---|
@@ -70,10 +70,7 @@ Mỗi thư mục cấu hình của `main_bot` (`launch/`, `config/`, và khối 
 | Giao tiếp động cơ/servo | Plugin Gazebo trực tiếp | micro-ROS qua package `mcu_agent` |
 | Launch chính | [`launch/simulation/gazebo.launch.py`](src/main_bot/launch/simulation/gazebo.launch.py) | [`launch/practical/robot.launch.py`](src/main_bot/launch/practical/robot.launch.py) |
 
-**Không đổi giữa 2 chế độ**: `lane_control_node`, `overtake_node`, `lane_follower_node`,
-`overtake_vision_node`, `ackermann_steering_controller`, và toàn bộ hình học vật lý trong
-`description/` (chassis, camera, IMU, LiDAR — dùng chung 1 file cho cả 2 chế độ, chỉ khối
-`<gazebo><sensor>` bị tắt khi `sim_mode:=false`).
+Không đổi giữa 2 chế độ: `lane_control_node`, `overtake_node`, `lane_follower_node`, `overtake_vision_node`, `ackermann_steering_controller`, và toàn bộ hình học vật lý trong `description/` (chassis, camera, IMU, LiDAR dùng chung 1 file cho cả 2 chế độ, chỉ khối `<gazebo><sensor>` bị tắt khi `sim_mode:=false`).
 
 ## Kiến trúc hệ thống
 
@@ -104,9 +101,7 @@ flowchart LR
     LC -- "/cmd_vel" --> CM
 ```
 
-> `overtake_node` chỉ dùng vision để **bổ sung tầm phát hiện xa** cho vật cản phía trước.
-> Khoảng trống làn ngoài (`adj_clear`) luôn được quyết định bằng LiDAR để tránh camera nhìn thẳng
-> gây báo sai khi NPC/xe khác chạy song song ở làn ngoài.
+`overtake_node` chỉ dùng vision để bổ sung tầm phát hiện xa cho vật cản phía trước. Khoảng trống làn ngoài (`adj_clear`) luôn được quyết định bằng LiDAR để tránh camera nhìn thẳng gây báo sai khi NPC/xe khác chạy song song ở làn ngoài.
 
 ## Pipeline thị giác — giữ làn
 
@@ -132,7 +127,7 @@ flowchart TD
 | `kappa` | Độ cong đường tại vị trí robot | 1/m |
 | `valid` | EMA đang hoạt động tin cậy | bool |
 
-Kết quả được publish lên `/status_err` (`geometry_msgs/Vector3`: `x=e_y, y=e_psi, z=kappa`) cho `lane_control_node`, đồng thời `overtake_vision_node` cũng lắng nghe `kappa` để bù góc nhìn camera trên khúc cua.
+Kết quả được publish lên `/status_err` (`geometry_msgs/Vector3`: `x=e_y, y=e_psi, z=kappa`) cho `lane_control_node`; `overtake_vision_node` cũng lắng nghe `kappa` để bù góc nhìn camera trên khúc cua.
 
 ## Pipeline vượt xe — 7 lớp
 
@@ -175,7 +170,7 @@ stateDiagram-v2
 |---|---|---|
 | [`main_bot`](src/main_bot) | C++ / Python | Toàn bộ pipeline giữ làn + vượt xe, mô tả robot (URDF/xacro), launch sim & thật, plugin `ros2_control` cho robot thật |
 | [`mcu_agent`](src/mcu_agent) | C++ | Quản lý tiến trình micro-ROS Agent, cầu nối ESP32 ↔ ROS 2 topics cho robot thật |
-| [`gui`](src/gui) | Python (PyQt5) | Bảng điều khiển mô phỏng: launch/stop Gazebo, biểu đồ `e_y`/`e_psi` real-time, xem camera debug |
+| [`gui`](src/gui) | Python (PyQt5) | `control_gui.py` — GUI hợp nhất Sim/Real × Autonomous/Manual: launch/stop, joystick lái tay, biểu đồ `e_y`/`e_psi` và camera debug ở cửa sổ riêng |
 
 ## Cấu trúc thư mục
 
@@ -199,7 +194,7 @@ LKAS/
     │   │   ├── overtake_vision_node.py      # Nhận diện NPC bằng màu (HSV) qua camera
     │   │   ├── odom_tf_relay.py             # (legacy) relay TF — đã thay bằng publish_tf của EKF
     │   │   └── vision/                      # ai_detector / processor / estimator / transformer
-    │   ├── description/                     # URDF/xacro — DÙNG CHUNG cho sim & thật
+    │   ├── description/                     # URDF/xacro — dùng chung cho sim & thật
     │   │   ├── robot.urdf.xacro             # xacro:arg sim_mode chọn nhánh ros2_control
     │   │   ├── camera.xacro, imu.xacro, lidar.xacro, robot_core.xacro, inertial.xacro
     │   │   ├── simulation/ros2_control.xacro    # plugin=gz_ros2_control/GazeboSimSystem
@@ -218,7 +213,7 @@ LKAS/
     │   ├── launch/mcu_agent.launch.py
     │   └── scripts/setup_micro_ros_agent.sh # build 1 lần micro-ROS Agent gốc (không tự chạy)
     │
-    └── gui/gui/control_gui.py                # PyQt5 control panel — sim/real x auto/manual
+    └── gui/gui/control_gui.py               # GUI hợp nhất — Sim/Real × Autonomous/Manual
 ```
 
 ## Thông số robot & thế giới mô phỏng
@@ -292,9 +287,7 @@ ros2 run gui control_gui
 ros2 launch main_bot display.launch.py
 ```
 
-> Lưu ý: `ros2 launch main_bot <tên_file>.launch.py` dùng **tên file trần** (không kèm đường dẫn
-> `simulation/`/`practical/`) — `ros2 launch` tự tìm đệ quy trong `share/main_bot/`, và mỗi file có
-> tên duy nhất trong toàn bộ package nên không bị nhầm lẫn.
+`ros2 launch main_bot <tên_file>.launch.py` dùng tên file trần, không kèm đường dẫn `simulation/`/`practical/` — `ros2 launch` tự tìm đệ quy trong `share/main_bot/`, và mỗi file có tên duy nhất trong toàn bộ package nên không bị nhầm lẫn.
 
 Sau khi chạy, có thể theo dõi các topic quan trọng:
 
@@ -306,9 +299,7 @@ ros2 run rqt_image_view rqt_image_view   # xem /processed_image, /overtake/visio
 
 ## Chạy trên robot thật
 
-**Đã xác nhận chạy được end-to-end trên phần cứng thật**, bao gồm cả lane-keeping tự hành —
-xem [README gốc](../README.md#trạng-thái-dự-án) cho trạng thái chi tiết. Firmware ESP32 đã có sẵn
-tại [`esp32-for-lkas/`](../esp32-for-lkas/), không cần tự viết lại.
+Đã kiểm chứng chạy được end-to-end trên phần cứng thật, bao gồm lane-keeping tự hành — xem [README gốc](../README.md#trạng-thái-dự-án) cho trạng thái chi tiết. Firmware ESP32 có sẵn tại [`esp32-for-lkas/`](../esp32-for-lkas/).
 
 ```bash
 # 1. Build 1 lần micro-ROS Agent gốc (clone + build ngoài workspace chính, xem
@@ -327,14 +318,9 @@ ros2 launch main_bot robot.launch.py serial_port:=/dev/ttyACM0 baud_rate:=115200
 #     (không tranh chấp /cmd_vel với pipeline tự lái), rồi mới chuyển Autonomous.
 ```
 
-`robot.launch.py` khởi động: `robot_state_publisher` (URDF với `sim_mode:=false`),
-`controller_manager` (nạp `main_bot_hardware/RealRobotSystem`), `ackermann_steering_controller`,
-`ekf_node`, `mcu_agent_node`, rồi đúng 4 node ứng dụng dùng chung với mô phỏng.
+`robot.launch.py` khởi động: `robot_state_publisher` (URDF với `sim_mode:=false`), `controller_manager` (nạp `main_bot_hardware/RealRobotSystem`), `ackermann_steering_controller`, `ekf_node`, `mcu_agent_node`, rồi đúng 4 node ứng dụng dùng chung với mô phỏng.
 
-> ⚠️ Node driver camera/LiDAR thật trong
-> [`launch/practical/robot.launch.py`](src/main_bot/launch/practical/robot.launch.py) hiện vẫn chỉ
-> có ví dụ dạng comment (`v4l2_camera` / `rplidar_ros`) — cần rà soát và commit chính thức node đang
-> dùng thực tế vào file này.
+Node driver camera/LiDAR thật trong [`launch/practical/robot.launch.py`](src/main_bot/launch/practical/robot.launch.py) hiện vẫn chỉ có ví dụ dạng comment (`v4l2_camera` / `rplidar_ros`) — cần commit chính thức node đang dùng thực tế vào file này.
 
 ## Tham số có thể tinh chỉnh
 
@@ -399,22 +385,23 @@ Tất cả tham số dưới đây có thể chỉnh qua `ros2 param set` khi no
 
 ## Ghi chú thiết kế quan trọng
 
-Những quyết định thiết kế sau đây **không hiển nhiên từ code** và cần được giữ lại khi chỉnh sửa:
+Các quyết định thiết kế sau không hiển nhiên từ code và cần được giữ lại khi chỉnh sửa:
 
-- **Bù độ cong (`theta_bias`) trong `SafetyMonitor`**: trên khúc cua, một NPC cách D mét phía trước sẽ xuất hiện ở góc LiDAR ≈ `D·kappa`, có thể vượt ra ngoài sector thẳng mặc định. Tất cả sector (front / adjacent / same-lane) đều được dịch theo `theta_bias` để không bỏ sót NPC trên cua.
-- **Vision chỉ bổ sung phát hiện phía trước, không dùng cho `adj_clear`**: camera nhìn thẳng về phía trước nên một NPC chạy song song ở làn ngoài luôn nằm trong khung hình → nếu dùng vision để đánh giá làn ngoài sẽ liên tục báo "bị chặn" sai. LiDAR (sector trái 45–135°) là nguồn duy nhất cho `adj_clear`.
+- **Bù độ cong (`theta_bias`) trong `SafetyMonitor`**: trên khúc cua, một NPC cách D mét phía trước sẽ xuất hiện ở góc LiDAR ≈ `D·kappa`, có thể vượt ra ngoài sector thẳng mặc định. Tất cả sector (front / adjacent / same-lane) được dịch theo `theta_bias` để không bỏ sót NPC trên cua.
+- **Vision chỉ bổ sung phát hiện phía trước, không dùng cho `adj_clear`**: camera nhìn thẳng về phía trước nên một NPC chạy song song ở làn ngoài luôn nằm trong khung hình — nếu dùng vision để đánh giá làn ngoài sẽ liên tục báo "bị chặn" sai. LiDAR (sector trái 45–135°) là nguồn duy nhất cho `adj_clear`.
 - **Debounce 3 tick khi huỷ `PREPARE`**: nhiễu 1 tick của `adj_clear` không được phép huỷ ngay trạng thái `PREPARE`, nếu không sẽ dao động liên tục giữa `FOLLOW` và `PREPARE`.
-- **Sửa lỗi tham chiếu camera khi đổi làn (`lane_control_node`)**: `e_y` được đo từ tâm làn mà camera *hiện đang* theo dõi. Khi robot merge sang làn ngoài, tâm làn tham chiếu của camera cũng đổi theo và `e_y` nhảy về gần 0 dù robot chưa thực sự tới tâm làn ngoài — nếu không sửa, robot sẽ hiểu nhầm là "còn phải lái trái" và lao ra khỏi đường. Cách xử lý: chốt lại `cam_ref_offset_` tại thời điểm phát hiện bước nhảy tham chiếu, rồi cộng bù vào `e_y` trước khi trừ `target_offset`.
+- **Sửa lỗi tham chiếu camera khi đổi làn (`lane_control_node`)**: `e_y` được đo từ tâm làn mà camera hiện đang theo dõi. Khi robot merge sang làn ngoài, tâm làn tham chiếu của camera cũng đổi theo và `e_y` nhảy về gần 0 dù robot chưa thực sự tới tâm làn ngoài — nếu không sửa, robot hiểu nhầm là "còn phải lái trái" và lao ra khỏi đường. Cách xử lý: chốt lại `cam_ref_offset_` tại thời điểm phát hiện bước nhảy tham chiếu, rồi cộng bù vào `e_y` trước khi trừ `target_offset`.
 - **`kappa_blend` mô phỏng = 0.85 (khác mặc định 0.60)**: trên khúc cua trái khi robot đang ở làn ngoài, ước lượng κ từ camera có thể sai dấu (âm thay vì dương), khiến feed-forward lái ngược hướng. Tăng tỉ trọng odometry lên 85% đảm bảo `kappa_use` luôn đúng dấu kể cả khi vision sai hoàn toàn.
 - **EMA bất đối xứng trong `lane_control_node`**: dùng `alpha_conv` (hội tụ nhanh hơn) khi lệnh lái đang giảm để dập dao động ngay sau khi thoát cua, còn khi lệnh đang tăng thì dùng `alpha` mượt hơn để tránh giật.
 - **NPC dùng `VelocityControl` + hiệu chỉnh pose định kỳ** (mô phỏng): nếu chỉ set velocity, NPC sẽ trôi lệch làn dần theo thời gian; nếu chỉ set pose trực tiếp, vật lý va chạm sẽ không hoạt động đúng (robot có thể xuyên qua NPC). Giải pháp: publish velocity mỗi 20ms để giữ va chạm vật lý thật, đồng thời hiệu chỉnh pose bất đồng bộ mỗi ~1s để triệt tiêu drift tích luỹ.
 - **Bộ lọc Kalman trên hệ số đa thức (`estimator.py`)**: khi fit đa thức không đáng tin (ít điểm, residual lớn), `r_scale` tăng lên khiến Kalman tin vào dự đoán (predict) nhiều hơn là đo lường (measurement) — tránh việc một khung hình fit sai làm `e_y`/`e_psi` giật đột ngột.
 - **`RealRobotSystem` không đụng serial/XRCE-DDS trực tiếp**: nó chỉ subscribe/publish 2 topic ROS 2 chuẩn (`/mcu/joint_states`, `/mcu/joint_commands`). Toàn bộ phần giao tiếp micro-ROS thật (agent, session XRCE-DDS) nằm trong `mcu_agent` — tách lớp này giúp hardware plugin không phụ thuộc chi tiết transport, và chỉ 1 tiến trình (`mcu_agent_node`) giữ cổng serial tại một thời điểm.
 - **2 bánh trước không có encoder trên robot thật**: `front_left_wheel_joint`/`front_right_wheel_joint` là bánh bị động (free-spinning), không nằm trong hợp đồng topic MCU — `RealRobotSystem` luôn báo 0 cho state của 2 joint này (khác với mô phỏng, nơi vật lý Gazebo mô phỏng chúng thật).
+- **`/mcu/joint_commands` được khớp theo tên joint, không theo thứ tự mảng**: `RealRobotSystem::write()` publish message với thứ tự phần tử theo khai báo trong `ros2_control.xacro`, không cố định. Firmware (`micro_ros_bridge.cpp`) tra cứu `msg->name[i]` để gán đúng lệnh cho đúng joint — sửa đổi thứ tự joint trong xacro sẽ không làm hỏng giao tiếp, miễn tên joint giữ nguyên.
 
 ## Giấy phép
 
-Chưa khai báo giấy phép chính thức (xem [`package.xml`](src/main_bot/package.xml)). Vui lòng bổ sung `LICENSE` trước khi phát hành công khai.
+Chưa khai báo giấy phép chính thức (xem [`package.xml`](src/main_bot/package.xml)). Bổ sung `LICENSE` trước khi phát hành công khai.
 
 ---
 
